@@ -1,0 +1,59 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# Packaging and build output
+build/
+dist/
+*.egg-info/
+
+# Notebooks and editors
+.ipynb_checkpoints/
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Datasets and medical-image arrays
+data/
+dataset/
+datasets/
+*.npy
+*.npz
+
+# Model weights and checkpoints
+checkpoints/
+models/
+weights/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.h5
+
+# Generated experiment artifacts
+outputs/
+runs/
+artifacts/
+logs/
+wandb/
+tensorboard/
+results/*
+!results/.gitkeep
+
