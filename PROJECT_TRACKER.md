@@ -24,10 +24,12 @@
 
 - [x] Finalize project scope and proposal.
 - [x] Initialize GitHub repository (`README.md`, `.gitignore`).
-- [ ] **Team A:** Download the BTD dataset from Kaggle to local machines (do not push to GitHub).
-- [ ] **Team A:** Write `src/data_loader.py` to load `.npy` files.
-- [ ] **Team A:** Implement intensity normalization and 1-to-3 channel duplication.
-- [ ] **Team A:** Parse dataset CSVs to create distinct Training, Validation, and Test splits. Ensure splits are isolated by manipulation type (CTGAN vs. Diffusion).
+- [x] **Team A:** Download the BTD dataset from Kaggle to local machines (do not push to GitHub).
+- [ ] **Team A:** Write `src/data_loader.py` to load `.npy` files. *(written on `feature/data-loader`; confirm with `python -m src.check_data` on the real data)*
+- [ ] **Team A:** Implement intensity normalization and 1-to-3 channel duplication. *(fixed CT window + scaling to [0, 1]; same check as above)*
+- [ ] **Team A:** Parse dataset CSVs to create distinct Training, Validation, and Test splits. Ensure splits are isolated by manipulation type (CTGAN vs. Diffusion). *(`src/splits.py`, split by scan ID; same check as above)*
+- [ ] **Team A:** Run the shortcut checks (slice position, scanner, file type) and decide whether to turn on the slice filter.
+- [ ] **Team A (stretch):** Add MRI (`.png`) loading after the CT pipeline is confirmed.
 
 ### Phase 2: Baselines & Midterm Report (Weeks 4-6)
 
