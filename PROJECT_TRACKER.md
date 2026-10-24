@@ -22,6 +22,12 @@
 
 **Goal:** Set up the repository and build the data ingestion pipeline.
 
+CT correction validated locally on `codex/author-ct-preprocessing`: use the authors' [-700, 2000]
+window and 96x96 CSV-centered patches for both classes, preserving every CSV row. The CNN
+adapter still produces 3x224x224 tensors. All 4,760 CT files / 5,091 ROI rows passed the
+full audit; 20 tests pass. Review and merge remain pending. See
+[CT_DATA_HANDOFF.md](docs/CT_DATA_HANDOFF.md) for results and remaining dataset biases.
+
 - [x] Finalize project scope and proposal.
 - [x] Initialize GitHub repository (`README.md`, `.gitignore`).
 - [x] **Team A:** Download the BTD dataset from Kaggle to local machines (do not push to GitHub).

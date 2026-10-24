@@ -34,7 +34,7 @@ def _make_task(root, task):
                 rel = f"CT/{task}/{folder}/{scan}/{sl}.npy"
                 f = root / rel
                 f.parent.mkdir(parents=True, exist_ok=True)
-                np.save(f, rng.integers(-1000, 400, (64, 64)).astype(dtype))
+                np.save(f, rng.integers(-1000, 2200, (128, 128)).astype(dtype))
                 row = dict(type=typ, path=rel, x=40, y=20, scanner=scanner, cur_slice=sl)
                 row[ctgan_col], row[sd_col] = flags
                 rows.append(row)
@@ -70,11 +70,14 @@ def test_methods_are_separated(root):
     assert (s["test_other"]["label"] == 1).any() and (s["test_other"]["label"] == 0).any()
 
 
-def test_duplicates_merged_and_coords_kept(root):
+def test_csv_regions_preserved_without_merging_by_path(root):
     df = load_task_table("injection", root)
-    assert df["path"].is_unique
-    dup = df[df["xs"].str.len() == 2]
-    assert len(dup) == 1 and set(dup.iloc[0]["xs"]) == {40, 10}
+    raw = pd.read_csv(root / "CT/injection/CT_injection.csv")
+    assert len(df) == len(raw)
+    dup = df[df["path"].duplicated(keep=False)]
+    assert len(dup) == 2 and set(dup["x"]) == {40, 10}
+    assignment = build_splits("injection", root=root)
+    assert sum(dup.iloc[0]["path"] in set(s["path"]) for s in assignment.values()) == 1
 
 
 def test_split_is_reproducible(root):
@@ -93,7 +96,7 @@ def test_slice_filter_off_by_default_and_works_when_on(root):
 
 
 def test_window_and_scale():
-    out = window_and_scale(np.array([-3000.0, -1000.0, -300.0, 400.0, 2000.0]), -1000, 400)
+    out = window_and_scale(np.array([-3000.0, -700.0, 650.0, 2000.0, 3000.0]), -700, 2000)
     assert out.min() == 0.0 and out.max() == 1.0 and out[2] == pytest.approx(0.5)
 
 
@@ -106,10 +109,9 @@ def test_item_shape_range_and_dtype_normalised(root):
         assert img.shape == (3, 32, 32) and img.dtype.is_floating_point
         assert 0.0 <= img.min() and img.max() <= 1.0
         assert torch_equal_channels(img)
-        if label == 1:
-            assert meta["x"] == pytest.approx(40 * 32 / 64) and meta["y"] == pytest.approx(20 * 32 / 64)
-        else:
-            assert meta["x"] == -1.0 and meta["y"] == -1.0
+        # These ROIs are near the top-left edge, so the patch starts at (0, 0).
+        assert meta["x"] == pytest.approx(float(ds.df.iloc[i]["x"]) * 32 / 96)
+        assert meta["y"] == pytest.approx(20 * 32 / 96)
 
 
 def torch_equal_channels(img):

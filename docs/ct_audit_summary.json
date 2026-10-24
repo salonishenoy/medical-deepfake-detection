@@ -1,0 +1,229 @@
+{
+  "config": {
+    "hu_min": -700.0,
+    "hu_max": 2000.0,
+    "patch_size": 96,
+    "image_size": 224,
+    "imagenet_norm": true,
+    "seed": 42,
+    "val_frac": 0.15,
+    "test_frac": 0.15,
+    "slice_range": null,
+    "flip_prob": 0.5,
+    "rotation_deg": 10.0
+  },
+  "reference_commit": "0fa74daef6802d305dcca4e5e37b4393fdf89c5b",
+  "tasks": {
+    "injection": {
+      "csv_rows": 3945,
+      "unique_files": 3635,
+      "scans": 256,
+      "exact_duplicate_csv_rows": 150,
+      "rows_checked": 3945,
+      "errors": 0,
+      "max_reference_absolute_error": 5.960464477539063e-08,
+      "edge_shift_rows": 24,
+      "raw_dtype_file_counts": {
+        "int16": 2388,
+        "float64": 1247
+      },
+      "hash_checks": {
+        "native_hash": {
+          "duplicate_groups": 150,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        },
+        "cnn_hash": {
+          "duplicate_groups": 150,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        },
+        "raw_hash": {
+          "duplicate_groups": 275,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        }
+      },
+      "splits": {
+        "CTGAN": {
+          "train": {
+            "scans": 180,
+            "authentic": 903,
+            "fake": 828
+          },
+          "val": {
+            "scans": 38,
+            "authentic": 153,
+            "fake": 231
+          },
+          "test_same": {
+            "scans": 38,
+            "authentic": 141,
+            "fake": 315
+          },
+          "test_other": {
+            "scans": 38,
+            "authentic": 141,
+            "fake": 315
+          }
+        },
+        "SD": {
+          "train": {
+            "scans": 180,
+            "authentic": 903,
+            "fake": 828
+          },
+          "val": {
+            "scans": 38,
+            "authentic": 153,
+            "fake": 231
+          },
+          "test_same": {
+            "scans": 38,
+            "authentic": 141,
+            "fake": 315
+          },
+          "test_other": {
+            "scans": 38,
+            "authentic": 141,
+            "fake": 315
+          }
+        }
+      },
+      "validation_shortcut_auc": {
+        "CTGAN": {
+          "slice": 0.7648473530826473,
+          "brightness": 0.45137651020003966,
+          "texture": 0.5004527063350593,
+          "clipping": 0.5169623404917523,
+          "image_statistics": 0.5891124126418243,
+          "scanner": 0.7216704863763688
+        },
+        "SD": {
+          "slice": 0.7648473530826473,
+          "brightness": 0.4153014741250036,
+          "texture": 0.5119825708061002,
+          "clipping": 0.6464222052457347,
+          "image_statistics": 0.7536145771439888,
+          "scanner": 0.7216704863763688
+        }
+      },
+      "batch_rows": {
+        "eval": 3945,
+        "train": 3945
+      },
+      "passed": true
+    },
+    "removal": {
+      "csv_rows": 1146,
+      "unique_files": 1125,
+      "scans": 207,
+      "exact_duplicate_csv_rows": 0,
+      "rows_checked": 1146,
+      "errors": 0,
+      "max_reference_absolute_error": 1.1920928955078125e-07,
+      "edge_shift_rows": 18,
+      "raw_dtype_file_counts": {
+        "float64": 1125
+      },
+      "hash_checks": {
+        "native_hash": {
+          "duplicate_groups": 0,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        },
+        "cnn_hash": {
+          "duplicate_groups": 0,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        },
+        "raw_hash": {
+          "duplicate_groups": 382,
+          "conflicting_label_groups": 375,
+          "cross_split_groups": 0
+        }
+      },
+      "splits": {
+        "CTGAN": {
+          "train": {
+            "scans": 143,
+            "authentic": 255,
+            "fake": 255
+          },
+          "val": {
+            "scans": 32,
+            "authentic": 54,
+            "fake": 54
+          },
+          "test_same": {
+            "scans": 32,
+            "authentic": 73,
+            "fake": 73
+          },
+          "test_other": {
+            "scans": 32,
+            "authentic": 73,
+            "fake": 73
+          }
+        },
+        "SD": {
+          "train": {
+            "scans": 143,
+            "authentic": 255,
+            "fake": 255
+          },
+          "val": {
+            "scans": 32,
+            "authentic": 54,
+            "fake": 54
+          },
+          "test_same": {
+            "scans": 32,
+            "authentic": 73,
+            "fake": 73
+          },
+          "test_other": {
+            "scans": 32,
+            "authentic": 73,
+            "fake": 73
+          }
+        }
+      },
+      "validation_shortcut_auc": {
+        "CTGAN": {
+          "slice": 0.5,
+          "brightness": 0.6052812071330589,
+          "texture": 0.5697873799725651,
+          "clipping": 0.5516117969821674,
+          "image_statistics": 0.5908779149519889,
+          "scanner": 0.5
+        },
+        "SD": {
+          "slice": 0.5,
+          "brightness": 0.622085048010974,
+          "texture": 0.5593278463648833,
+          "clipping": 0.9691358024691359,
+          "image_statistics": 0.9993141289437586,
+          "scanner": 0.5
+        }
+      },
+      "batch_rows": {
+        "eval": 1146,
+        "train": 1146
+      },
+      "passed": true
+    }
+  },
+  "cross_task_scan_overlap_injection_vs_removal": {
+    "train/train": 105,
+    "train/val": 23,
+    "train/test": 22,
+    "val/train": 18,
+    "val/val": 6,
+    "val/test": 6,
+    "test/train": 20,
+    "test/val": 3,
+    "test/test": 3
+  },
+  "passed": true
+}

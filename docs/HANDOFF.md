@@ -1,5 +1,15 @@
 # Handoff: Medical Deepfake Detection (Team A, data engineering)
 
+> **Update (2026-10-24):** The historical notes below describe the original whole-slice
+> implementation. The user has since selected the authors' CT preprocessing: [-700, 2000]
+> scaling and coordinate-centered 96x96 patches for BOTH classes, preserving CSV rows.
+> See README.md for the current CNN adapter and coordinate contract. The earlier claim
+> that removal is a clean whole-slice benchmark is withdrawn: 13 sampled TB/FB_CTGAN
+> pairs have identical arrays and opposite labels; their coordinate-centered patches differ.
+> Old unique-file counts, path-merging behavior, and authentic x=y=-1 are superseded.
+> The full CT audit now passes on all 4,760 files / 5,091 ROI rows. Current results,
+> remaining shortcut risks, and downstream usage are in [CT_DATA_HANDOFF.md](CT_DATA_HANDOFF.md).
+
 Written 2026-10-24 for another agent (or person) who will continue this work. It records
 everything decided, found, built and left open up to that date. Nothing here is a summary
 of a guess unless it is marked **ASSUMPTION** or **UNVERIFIED**.

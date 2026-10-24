@@ -2,7 +2,8 @@
 
 Key ideas
 ---------
-* Every row is one 2D slice. Its scan (patient) ID is the folder name in the path.
+* Every CSV row defines an ROI patch. A slice can contribute multiple patches.
+* The scan ID is the folder name in the path.
 * Splits are made by SCAN, so slices from one scan never appear in two splits.
 * The same source slices are reused across the CTGAN and Stable Diffusion sets,
   so the scan split is decided once per task and shared by both methods.
@@ -38,10 +39,10 @@ def _find_flag_column(df: pd.DataFrame, prefix: str) -> str:
 
 
 def load_task_table(task: str, root: Optional[str | Path] = None) -> pd.DataFrame:
-    """Load one task's CSV into a clean table with one row per slice.
+    """Load one task's CSV, preserving the authors' one-row-per-ROI samples.
 
     Columns: path, type, label (1 = fake), scan_id, scanner, cur_slice,
-             x, y (first lesion), xs, ys (all lesions on the slice),
+             x, y (ROI location for authentic and manipulated samples),
              in_ctgan, in_sd (1 if the row belongs to that method's test set).
     """
     if task not in TASKS:
@@ -53,23 +54,9 @@ def load_task_table(task: str, root: Optional[str | Path] = None) -> pd.DataFram
     ctgan_col = _find_flag_column(df, "CTGAN")
     sd_col = _find_flag_column(df, "SD")
 
-    # The CSV repeats a path when one slice has several lesions. Merge those
-    # rows into one, keeping every lesion coordinate.
-    out = (
-        df.groupby("path", sort=False)
-        .agg(
-            type=("type", "first"),
-            scanner=("scanner", "first"),
-            cur_slice=("cur_slice", "first"),
-            x=("x", "first"),
-            y=("y", "first"),
-            xs=("x", list),
-            ys=("y", list),
-            in_ctgan=(ctgan_col, "max"),
-            in_sd=(sd_col, "max"),
-        )
-        .reset_index()
-    )
+    # Match the reference loader's row sampling, including exact duplicate rows.
+    # Grouping by path would discard distinct coordinates on the same slice.
+    out = df.rename(columns={ctgan_col: "in_ctgan", sd_col: "in_sd"}).copy()
     out["label"] = out["type"].str.strip().str[-2:].isin(FAKE_SUFFIXES).astype(int)
     out["scan_id"] = out["path"].str.split("/").str[-2]
     return out
@@ -147,7 +134,7 @@ def check_no_leakage(splits: Dict[str, pd.DataFrame]) -> None:
 
 
 def summarize(splits: Dict[str, pd.DataFrame]) -> pd.DataFrame:
-    """Counts of authentic (0) / fake (1) slices and number of scans per split."""
+    """Counts of authentic (0) / fake (1) ROI samples and scans per split."""
     rows = []
     for name, d in splits.items():
         rows.append(

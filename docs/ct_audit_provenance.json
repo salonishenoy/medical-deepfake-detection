@@ -1,0 +1,137 @@
+{
+  "audit_date": "2026-10-24",
+  "dataset": {
+    "ref": "freddiegraboski/btd-mri-and-ct-deepfake-test-sets",
+    "version": 7,
+    "ct_files_on_disk": 4760,
+    "ct_files_referenced": 4760,
+    "missing_files": 0,
+    "unreferenced_ct_files": 0
+  },
+  "pipeline_base_commit": "b9794e583af1478490269c17fa77fd326f15e28c",
+  "local_branch": "codex/author-ct-preprocessing",
+  "code_state": "Locally modified working tree; source hashes below identify audited implementation.",
+  "reference_commit": "0fa74daef6802d305dcca4e5e37b4393fdf89c5b",
+  "source_sha256": {
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/audit_data.py": "ca02a23980201abbdb6440b5831aa31564d84954a98b07560795af1af366d841",
+    "src/check_data.py": "7424b123aab6c4f75c00426e224bff16730ac955c8e8439c51a08e1cf6f5f8c7",
+    "src/config.py": "90c498c37111aedbb2728e422b4c7eb07df4ba79623747b5eeb89d3865bbb68e",
+    "src/data_loader.py": "4c935e06bbb5c71a30017b4918cdd58cbd54490f8afacc1a52500ccd6a03514d",
+    "src/splits.py": "83914cc578d76267b7e472824ebe5f18d26e41b078e4ced5914440d9af46453d"
+  },
+  "manifest_sha256": {
+    "CT/injection/CT_injection.csv": "650eb837eb87996138ce2f7f88e81de5542d490bc453713e98a3fc61d9381ee9",
+    "CT/removal/CT_removal.csv": "13d53049187934b4b94ebf741f4f7a832c3a2c4adfdc2296bfe2181383f29fde"
+  },
+  "python": "3.12.13 (main, Jun  2 2026, 22:42:28) [Clang 22.1.3 ]",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "torch": "2.14.1",
+    "torchvision": "0.29.1",
+    "pytest": "9.1.1",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2"
+  },
+  "notebook_class_comparison": {
+    "native_patch_rows": 5091,
+    "unique_files": 4760,
+    "maximum_absolute_error": 1.1920928955078125e-07,
+    "contradictory_pairs_remaining": 0,
+    "prior_pairs_checked": 13,
+    "splits": {
+      "injection/CTGAN": {
+        "train": {
+          "scans": 180,
+          "authentic": 903,
+          "fake": 828
+        },
+        "val": {
+          "scans": 38,
+          "authentic": 153,
+          "fake": 231
+        },
+        "test_same": {
+          "scans": 38,
+          "authentic": 141,
+          "fake": 315
+        },
+        "test_other": {
+          "scans": 38,
+          "authentic": 141,
+          "fake": 315
+        }
+      },
+      "injection/SD": {
+        "train": {
+          "scans": 180,
+          "authentic": 903,
+          "fake": 828
+        },
+        "val": {
+          "scans": 38,
+          "authentic": 153,
+          "fake": 231
+        },
+        "test_same": {
+          "scans": 38,
+          "authentic": 141,
+          "fake": 315
+        },
+        "test_other": {
+          "scans": 38,
+          "authentic": 141,
+          "fake": 315
+        }
+      },
+      "removal/CTGAN": {
+        "train": {
+          "scans": 143,
+          "authentic": 255,
+          "fake": 255
+        },
+        "val": {
+          "scans": 32,
+          "authentic": 54,
+          "fake": 54
+        },
+        "test_same": {
+          "scans": 32,
+          "authentic": 73,
+          "fake": 73
+        },
+        "test_other": {
+          "scans": 32,
+          "authentic": 73,
+          "fake": 73
+        }
+      },
+      "removal/SD": {
+        "train": {
+          "scans": 143,
+          "authentic": 255,
+          "fake": 255
+        },
+        "val": {
+          "scans": 32,
+          "authentic": 54,
+          "fake": 54
+        },
+        "test_same": {
+          "scans": 32,
+          "authentic": 73,
+          "fake": 73
+        },
+        "test_other": {
+          "scans": 32,
+          "authentic": 73,
+          "fake": 73
+        }
+      }
+    }
+  },
+  "unit_tests": "20 passed",
+  "visual_checks": "Eight source/patch/resized overlay cases inspected: authentic and fake, interior and edge, injection and removal. Geometric annotation alignment only.",
+  "scope": "Team A CT engineering only. No detector training, Grad-CAM, MRI image audit, or clinical annotation verification."
+}

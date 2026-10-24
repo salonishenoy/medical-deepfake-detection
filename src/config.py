@@ -36,10 +36,10 @@ def get_data_root(root: Optional[str | Path] = None) -> Path:
 @dataclass
 class DataConfig:
     # --- CT intensity window (Hounsfield units). Everything is clipped to this
-    # range and then scaled to [0, 1], so the same tissue always gets the same
-    # brightness. -1000..400 covers lung and soft tissue.
-    hu_min: float = -1000.0
-    hu_max: float = 400.0
+    # range and then scaled to [0, 1], matching the BTD authors' CT preprocessing.
+    hu_min: float = -700.0
+    hu_max: float = 2000.0
+    patch_size: int = 96          # native-resolution ROI, before CNN resizing
 
     # --- Model input
     image_size: int = 224          # ResNet / EfficientNet input size

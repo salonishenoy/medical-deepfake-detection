@@ -11,7 +11,7 @@ For each task (injection / removal) it:
   6. shows what the slice-position filter WOULD remove (nothing is removed by default)
   7. trains two tiny "shortcut" models (slice number only, scanner only); an AUC
      well above 0.5 means that detail alone gives away real vs fake
-  8. saves a sample image grid with the lesion position marked on fakes
+  8. saves ROI patches with CSV locations marked (red = fake, green = authentic)
 """
 from __future__ import annotations
 
@@ -99,15 +99,15 @@ def save_samples(df: pd.DataFrame, root: Path, cfg: DataConfig, out_file: Path, 
     for ax, i in zip(axes.ravel(), picks):
         img, label, meta = ds[i]
         ax.imshow(img[0], cmap="gray", vmin=0, vmax=1)
-        if label == 1:
-            ax.add_patch(plt.Circle((meta["x"], meta["y"]), 12, fill=False, color="red", lw=1.5))
+        ax.add_patch(plt.Circle((meta["x"], meta["y"]), 12, fill=False,
+                               color="red" if label else "lime", lw=1.5))
         ax.set_title(("FAKE" if label else "real") + f" | slice {meta['cur_slice']}", fontsize=9)
         ax.axis("off")
     fig.tight_layout()
     out_file.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_file, dpi=100)
     plt.close(fig)
-    print(f"   saved sample grid: {out_file} (red circle = lesion position on fakes)")
+    print(f"   saved sample grid: {out_file} (CSV ROI: red = fake, green = authentic)")
 
 
 def check_task(task: str, method: str, root: Path, cfg: DataConfig, out_dir: Path, slice_range) -> None:

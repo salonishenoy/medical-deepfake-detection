@@ -3,7 +3,7 @@
 Preprocessing, in order (every image):
     1. load the .npy slice and cast to float32   (int16 / float64 -> one dtype)
     2. clip to a fixed CT window and scale to [0, 1]
-    3. resize to image_size x image_size
+    3. extract a 96x96 patch at the CSV coordinates, then resize to image_size
     4. copy the single channel to 3 channels      (pretrained CNNs expect RGB)
     5. training set only: random flips + small rotation
     6. optional ImageNet mean/std normalization   (for pretrained weights)
@@ -11,10 +11,10 @@ Preprocessing, in order (every image):
 Each item is (image, label, meta):
     image  float tensor [3, S, S]
     label  0 = authentic, 1 = manipulated
-    meta   dict with path, scan_id, scanner, cur_slice and x / y, the lesion
-           centre in the RESIZED image (column x, row y). x / y are -1 for
-           authentic images. For removal, only use fakes' x / y: the CSV's
-           authentic coordinates are the mirrored spot, not a lesion.
+    meta   dict with path, scan_id, scanner, cur_slice and x / y, the CSV ROI
+           location in the RESIZED PATCH (column x, row y), for BOTH classes.
+           Authentic removal coordinates select healthy tissue, not a lesion.
+           source_x/y and crop_left/top describe the original slice geometry.
            x / y are only valid when augmentation is off (val / test).
 """
 from __future__ import annotations
@@ -49,6 +49,19 @@ def window_and_scale(arr: np.ndarray, lo: float, hi: float) -> np.ndarray:
     return (np.clip(arr, lo, hi) - lo) / (hi - lo)
 
 
+def extract_patch(arr: np.ndarray, x: int, y: int, patch_size: int):
+    """Shift an ROI inward at image edges, as in the authors' evaluation loader."""
+    h, w = arr.shape
+    if patch_size <= 0 or patch_size % 2 or min(h, w) < patch_size:
+        raise ValueError(f"Expected a positive even patch size <= image dimensions, got {patch_size} for {arr.shape}")
+    if not (0 <= x < w and 0 <= y < h):
+        raise ValueError(f"ROI coordinate {(x, y)} is outside image shape {arr.shape}")
+    half = patch_size // 2
+    cx, cy = min(max(x, half), w - half), min(max(y, half), h - half)
+    left, top = cx - half, cy - half
+    return arr[top:top + patch_size, left:left + patch_size], left, top
+
+
 class BTDDataset(Dataset):
     def __init__(self, df: pd.DataFrame, root: str | Path, cfg: DataConfig, train: bool = False):
         self.df = df.reset_index(drop=True)
@@ -74,8 +87,9 @@ class BTDDataset(Dataset):
     def __getitem__(self, i: int):
         row = self.df.iloc[i]
         arr = load_slice(self.root / row["path"])
-        h, w = arr.shape
         arr = window_and_scale(arr, self.cfg.hu_min, self.cfg.hu_max)
+        source_x, source_y = int(row["x"]), int(row["y"])
+        arr, left, top = extract_patch(arr, source_x, source_y, self.cfg.patch_size)
 
         size = self.cfg.image_size
         img = torch.from_numpy(arr)[None, None]  # [1, 1, H, W]
@@ -87,10 +101,8 @@ class BTDDataset(Dataset):
         if self.cfg.imagenet_norm:
             img = (img - self.mean) / self.std
 
-        if row["label"] == 1:
-            x, y = float(row["x"]) * size / w, float(row["y"]) * size / h
-        else:
-            x, y = -1.0, -1.0
+        x = (source_x - left) * size / self.cfg.patch_size
+        y = (source_y - top) * size / self.cfg.patch_size
         meta = {
             "path": str(row["path"]),
             "scan_id": str(row["scan_id"]),
@@ -98,6 +110,10 @@ class BTDDataset(Dataset):
             "cur_slice": int(row["cur_slice"]),
             "x": x,
             "y": y,
+            "source_x": source_x,
+            "source_y": source_y,
+            "crop_left": left,
+            "crop_top": top,
         }
         return img, int(row["label"]), meta
 
