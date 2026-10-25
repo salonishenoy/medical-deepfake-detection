@@ -1,5 +1,16 @@
 # Team A CT data handoff
 
+> Authoritative current behavior: [preprocessing contract v1](PREPROCESSING_CONTRACT.md).
+> This handoff preserves the original full CT audit and subsequent metadata correction.
+> The [complete current-baseline audit](FULL_PREPROCESSING_AUDIT.md) now passes
+> all 5,091 CT rows with the frozen pixel-center metadata; 57 regression tests pass.
+
+> Metadata correction after the original full audit: resized x/y now follow
+> interpolation pixel centers. All 4,101 CT development rows were rechecked;
+> raw/native/CNN pixel hashes, labels, and splits are unchanged. The complete
+> suite now has 54 passing tests. Original full-audit results below remain
+> historical evidence for their recorded implementation.
+
 Audit date: 2026-10-24. Scope: CT data engineering only. No detector training,
 hyperparameter tuning, Grad-CAM implementation, or MRI image audit was performed.
 
@@ -11,7 +22,7 @@ and downstream integration, with the dataset limitations below. A passing audit
 does **not** certify an unbiased benchmark or model quality.
 
 - Dataset: [BTD MRI and CT Deepfake Test Sets](https://www.kaggle.com/datasets/freddiegraboski/btd-mri-and-ct-deepfake-test-sets), version **7**.
-- Reference: [authors' evaluation notebook](https://github.com/FreddieMG/BTD--Unsupervised-Detection-of-Medical-Deepfakes/blob/0fa74daef6802d305dcca4e5e37b4393fdf89c5b/BTD_evaluation.ipynb).
+- Reference: [reference implementation's evaluation notebook](https://github.com/FreddieMG/BTD--Unsupervised-Detection-of-Medical-Deepfakes/blob/0fa74daef6802d305dcca4e5e37b4393fdf89c5b/BTD_evaluation.ipynb).
 - Aggregate results: [ct_audit_summary.json](ct_audit_summary.json).
 - Runtime and source fingerprints: [ct_audit_provenance.json](ct_audit_provenance.json).
 
@@ -42,7 +53,7 @@ the release does not supply a separately verified patient mapping here.
 1. Load CT `.npy` slices and clip to **[-700, 2000]**, then scale to [0, 1].
 2. Extract a native **96x96** patch using the CSV's **x = column, y = row**, for
    authentic and manipulated samples. Shift edge crops inward, without padding.
-3. Preserve every CSV row, as the authors' loader does. Multiple coordinates on
+3. Preserve every CSV row, as the reference implementation's loader does. Multiple coordinates on
    one file are separate samples. The 150 exact duplicate injection rows are also
    preserved for reference fidelity; they are repeated weighting, not extra independent data.
 4. CNN adaptation: resize each patch to 224x224 and copy to three channels.
@@ -50,7 +61,7 @@ the release does not supply a separately verified patient mapping here.
 6. Default output applies ImageNet mean/std normalization. Consequently, final
    tensors are **not** constrained to [0, 1], and channels differ after normalization.
 
-The authors' detector uses one-channel native patches. Resizing, channel copying,
+The reference implementation's detector uses one-channel native patches. Resizing, channel copying,
 ImageNet normalization, and training augmentation are the project's CNN adapter.
 Use `DataConfig(image_size=96, imagenet_norm=False)` and `train=False` to inspect
 native patch values; all three channels then contain the reference patch.
@@ -64,8 +75,12 @@ Each batch is `(images, labels, meta)`:
   valid only without spatial augmentation (validation/test). Training coordinates
   currently describe the pre-augmentation patch and must not be used as transformed targets.
 - `source_x/y`: original CSV coordinates. `crop_left/top`: crop origin in the original slice.
-- Coordinate convention: `x_patch = (source_x - crop_left) * image_size / 96`,
-  analogously for y. These are annotation coordinates scaled to the patch, not masks.
+- Coordinate convention: `x_patch = (source_x - crop_left + 0.5) * image_size / 96 - 0.5`,
+  analogously for y. Integer input coordinates are zero-indexed pixel centers.
+  Metadata includes `coordinate_convention="pixel_center"` and
+  `coordinates_valid` (false during training). These are points, not masks.
+  Downsampled boundary points can lie between -0.5 and 0, or between the last
+  center and the outer edge. Do not clamp them; doing so breaks coordinate inversion.
 - Authentic removal coordinates select healthy tissue. Use fake samples for
   later tamper-region comparisons; an ROI center alone does not specify a segmentation mask.
 
@@ -114,7 +129,7 @@ difference magnitude, and fractions clipped to 0/1 gives these validation AUCs:
 
 For removal, the median zero-pixel fraction of native patches is approximately
 52.9% for TB, 55.8% for FB_CTGAN, and 1.46% for FB_SD. This difference survives
-the authors' preprocessing. It is an observed distribution cue; its exact generation
+the reference implementation's preprocessing. It is an observed distribution cue; its exact generation
 cause has not been established. A high SD-removal score alone is not evidence that
 a model learned lesion-local forensic cues or will generalize to other datasets.
 These estimates use one validation split (only 54 examples per class for removal),
@@ -166,6 +181,7 @@ Use the table above and `validation_shortcut_auc` when interpreting the release.
 
 - Teammate review and merge of the corrected preprocessing and audit changes.
 - Confirm colleagues use the same dataset version and configuration when reproducing.
-- Decide separately whether to add the MRI PNG loader (currently deferred).
+- MRI loading is implemented locally; see [MRI_DATA_HANDOFF.md](MRI_DATA_HANDOFF.md).
+- Mechanical audit complete: [frozen CT/MRI baseline results](FULL_PREPROCESSING_AUDIT.md).
 
 Detector development belongs to Team B; Grad-CAM and reporting belong to Team C.

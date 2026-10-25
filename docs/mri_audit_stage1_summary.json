@@ -1,0 +1,160 @@
+{
+  "stage": "MRI stage 1: source inventory and reference behavior, not a production loader release",
+  "dataset_version": 7,
+  "reference_commit": "0fa74daef6802d305dcca4e5e37b4393fdf89c5b",
+  "notebook_sha256": "a0c06362bb7b6e525b7061bf431145e33cbc8cf3d2cda06469831ca4ccda2892",
+  "manifest_sha256": {
+    "MRI_injection.csv": "d66adcc335db8a70d63793a0ca44ab00947e50598647159b6d2d63cf465f5c33",
+    "MRI_removal.csv": "1d79c6b0a4721b16430e97f42bf9ab9effd02decef7b58e9af0775b291d7222b"
+  },
+  "audit_script_sha256": "1e8ceda9478736f37ca92a2d723059f7d3cc127431faecce05f15363de7c8f3a",
+  "unique_files": 525,
+  "csv_rows": 700,
+  "source_folders": 25,
+  "image_mode": "L",
+  "image_shape": [
+    512,
+    512
+  ],
+  "dtype": "uint8",
+  "missing_files": 0,
+  "unreferenced_files": 0,
+  "reference_max_absolute_error": 0.0,
+  "tasks": {
+    "injection": {
+      "rows": 350,
+      "unique_files": 350,
+      "scans": 25,
+      "labels": {
+        "FM": 175,
+        "TM": 175
+      },
+      "duplicate_csv_rows": 0,
+      "flipped_rows": 265,
+      "edge_shifted_rows": 0,
+      "hash_checks": {
+        "raw_sha256": {
+          "duplicate_groups": 0,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        },
+        "patch_sha256": {
+          "duplicate_groups": 0,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        }
+      },
+      "provisional_splits": {
+        "test": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        },
+        "train": {
+          "scans": 17,
+          "authentic": 119,
+          "fake": 119
+        },
+        "val": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        }
+      },
+      "orientation_by_label": {
+        "FM": 132,
+        "TM": 133
+      },
+      "patch_statistics_by_label": {
+        "FM": {
+          "mean": 0.06788928806781769,
+          "zero_fraction": 0.09844970703125
+        },
+        "TM": {
+          "mean": 0.0699252337217331,
+          "zero_fraction": 0.06072998046875
+        }
+      },
+      "paired_source_slices": 175,
+      "paired_flip_disagreements": 1,
+      "disagreements_raw_orientation_closer_than_opposite": 1
+    },
+    "removal": {
+      "rows": 350,
+      "unique_files": 350,
+      "scans": 25,
+      "labels": {
+        "FB": 175,
+        "TB": 175
+      },
+      "duplicate_csv_rows": 0,
+      "flipped_rows": 260,
+      "edge_shifted_rows": 0,
+      "hash_checks": {
+        "raw_sha256": {
+          "duplicate_groups": 0,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        },
+        "patch_sha256": {
+          "duplicate_groups": 0,
+          "conflicting_label_groups": 0,
+          "cross_split_groups": 0
+        }
+      },
+      "provisional_splits": {
+        "test": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        },
+        "train": {
+          "scans": 17,
+          "authentic": 119,
+          "fake": 119
+        },
+        "val": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        }
+      },
+      "orientation_by_label": {
+        "FB": 127,
+        "TB": 133
+      },
+      "patch_statistics_by_label": {
+        "FB": {
+          "mean": 0.07368476688861847,
+          "zero_fraction": 0.001220703125
+        },
+        "TB": {
+          "mean": 0.06803888082504272,
+          "zero_fraction": 0.0526123046875
+        }
+      },
+      "paired_source_slices": 175,
+      "paired_flip_disagreements": 6,
+      "disagreements_raw_orientation_closer_than_opposite": 6
+    }
+  },
+  "normalization": "uint8 to float32 / 255; no CT HU window",
+  "patch_size": 128,
+  "orientation": "Flip vertically when normalized bottom 30 rows sum < top 30 rows sum; reference y=512-y",
+  "flipped_rows": 525,
+  "flipped_unique_files": 392,
+  "rows_different_using_strict_511_minus_y": 525,
+  "shared_authentic_files": 175,
+  "shared_authentic_different_coordinates": 175,
+  "shared_authentic_mirrored_x_511": 91,
+  "cross_task_source_split_overlap": 0,
+  "all_task_patch_cross_split_groups": 0,
+  "split_status": "Provisional shared scan-folder assignment using existing CT split function, seed 42; no approved MRI split API yet",
+  "caveats": [
+    "Folder identity is a grouping key, not an independently verified patient mapping.",
+    "Upstream 512-y differs by one pixel from the zero-index reflection 511-y; preserve and disclose reference behavior.",
+    "Image-dependent orientation decisions disagree in seven paired source slices; raw pairs are closer before opposite flips. This suggests heuristic instability, not verified anatomical orientation.",
+    "MRI release is SD-only; no CTGAN-versus-SD MRI test_other split.",
+    "Audit covers integrity and reference agreement, not clinical annotation truth or absence of statistical shortcuts."
+  ]
+}

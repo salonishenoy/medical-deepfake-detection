@@ -50,7 +50,7 @@ def window_and_scale(arr: np.ndarray, lo: float, hi: float) -> np.ndarray:
 
 
 def extract_patch(arr: np.ndarray, x: int, y: int, patch_size: int):
-    """Shift an ROI inward at image edges, as in the authors' evaluation loader."""
+    """Shift an ROI inward at image edges, as in the BTD evaluation loader."""
     h, w = arr.shape
     if patch_size <= 0 or patch_size % 2 or min(h, w) < patch_size:
         raise ValueError(f"Expected a positive even patch size <= image dimensions, got {patch_size} for {arr.shape}")
@@ -101,8 +101,9 @@ class BTDDataset(Dataset):
         if self.cfg.imagenet_norm:
             img = (img - self.mean) / self.std
 
-        x = (source_x - left) * size / self.cfg.patch_size
-        y = (source_y - top) * size / self.cfg.patch_size
+        # Match F.interpolate(..., align_corners=False): integer indices are pixel centers.
+        x = (source_x - left + 0.5) * size / self.cfg.patch_size - 0.5
+        y = (source_y - top + 0.5) * size / self.cfg.patch_size - 0.5
         meta = {
             "path": str(row["path"]),
             "scan_id": str(row["scan_id"]),
@@ -114,6 +115,8 @@ class BTDDataset(Dataset):
             "source_y": source_y,
             "crop_left": left,
             "crop_top": top,
+            "coordinate_convention": "pixel_center",
+            "coordinates_valid": not self.train,
         }
         return img, int(row["label"]), meta
 

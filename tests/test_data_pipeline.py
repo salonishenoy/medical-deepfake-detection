@@ -110,8 +110,8 @@ def test_item_shape_range_and_dtype_normalised(root):
         assert 0.0 <= img.min() and img.max() <= 1.0
         assert torch_equal_channels(img)
         # These ROIs are near the top-left edge, so the patch starts at (0, 0).
-        assert meta["x"] == pytest.approx(float(ds.df.iloc[i]["x"]) * 32 / 96)
-        assert meta["y"] == pytest.approx(20 * 32 / 96)
+        assert meta["x"] == pytest.approx((float(ds.df.iloc[i]["x"]) + .5) * 32 / 96 - .5)
+        assert meta["y"] == pytest.approx((20 + .5) * 32 / 96 - .5)
 
 
 def torch_equal_channels(img):
@@ -126,6 +126,8 @@ def test_dataloader_batches_and_augmentation_only_in_train(root):
     assert x.shape[1:] == (3, 32, 32) and set(y.tolist()) <= {0, 1}
     assert isinstance(meta["path"][0], str)
     assert loaders["train"].dataset.train and not loaders["val"].dataset.train
+    assert not meta["coordinates_valid"].any()
+    assert set(meta["coordinate_convention"]) == {"pixel_center"}
     # val items are deterministic (no augmentation)
     a = loaders["val"].dataset[0][0]
     b = loaders["val"].dataset[0][0]

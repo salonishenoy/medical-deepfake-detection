@@ -39,7 +39,7 @@ def _find_flag_column(df: pd.DataFrame, prefix: str) -> str:
 
 
 def load_task_table(task: str, root: Optional[str | Path] = None) -> pd.DataFrame:
-    """Load one task's CSV, preserving the authors' one-row-per-ROI samples.
+    """Load one task's CSV, preserving one-row-per-ROI sampling.
 
     Columns: path, type, label (1 = fake), scan_id, scanner, cur_slice,
              x, y (ROI location for authentic and manipulated samples),

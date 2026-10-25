@@ -1,0 +1,639 @@
+{
+  "scope": "Team A development-only MRI mitigation study",
+  "test_images_read": 0,
+  "test_probe_rows": 0,
+  "development_rows": 588,
+  "unique_development_images": 441,
+  "source_groups": 21,
+  "default_policy": "preserve native PNG orientation; no canonical anatomy claim",
+  "centroid_candidate_adopted": false,
+  "background_candidate_adopted": false,
+  "background_candidate": {
+    "rule": "Set intensities <= training-corner 99th percentile to zero before resizing",
+    "threshold_uint8": 29,
+    "unique_training_files": 357,
+    "corner_size": 30
+  },
+  "model_protocol": "Same fixed depth-3 data-quality probes; fit train, score validation. Repeated validation inspection is exploratory.",
+  "tasks": {
+    "injection": {
+      "development_rows": 294,
+      "paired_source_slices": 147,
+      "raw_orientation_closer_pairs": 147,
+      "border_disagreements": 1,
+      "centroid_disagreements": 2,
+      "preserve_disagreements": 0,
+      "changed_vs_border_rows": 237,
+      "probes": {
+        "border": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "orientation": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "texture": {
+            "validation_auc": 0.6371173469387754,
+            "source_bootstrap_95_interval": [
+              0.37755102040816324,
+              0.9241071428571429
+            ],
+            "within_source_auc_range": [
+              0.37755102040816324,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6406035665294925,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "background": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.45982142857142855,
+              0.5535714285714286
+            ],
+            "within_source_auc_range": [
+              0.42857142857142855,
+              0.5714285714285714
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.48628257887517146,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.45982142857142855,
+              0.5535714285714286
+            ],
+            "within_source_auc_range": [
+              0.42857142857142855,
+              0.5714285714285714
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.48628257887517146,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          }
+        },
+        "preserve": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "orientation": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "texture": {
+            "validation_auc": 0.6198979591836734,
+            "source_bootstrap_95_interval": [
+              0.32653061224489793,
+              0.9241071428571429
+            ],
+            "within_source_auc_range": [
+              0.3163265306122449,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6227709190672154,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "background": {
+            "validation_auc": 0.4732142857142857,
+            "source_bootstrap_95_interval": [
+              0.35714285714285715,
+              0.5535714285714286
+            ],
+            "within_source_auc_range": [
+              0.2857142857142857,
+              0.5714285714285714
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.45884773662551437,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.4732142857142857,
+            "source_bootstrap_95_interval": [
+              0.35714285714285715,
+              0.5535714285714286
+            ],
+            "within_source_auc_range": [
+              0.2857142857142857,
+              0.5714285714285714
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.45884773662551437,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          }
+        },
+        "preserve_floor": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "orientation": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "brightness": {
+            "validation_auc": 0.40624999999999994,
+            "source_bootstrap_95_interval": [
+              0.3399234693877551,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.3469387755102041,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.40329218106995895,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "texture": {
+            "validation_auc": 0.48022959183673464,
+            "source_bootstrap_95_interval": [
+              0.2857142857142857,
+              0.5784438775510204
+            ],
+            "within_source_auc_range": [
+              0.21428571428571427,
+              0.5918367346938775
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.4780521262002744,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "background": {
+            "validation_auc": 0.6766581632653063,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.8348214285714286
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.8571428571428572
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.681755829903978,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.7659438775510203,
+            "source_bootstrap_95_interval": [
+              0.6887755102040817,
+              0.8086734693877551
+            ],
+            "within_source_auc_range": [
+              0.6428571428571428,
+              0.7857142857142857
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.7770919067215363,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          }
+        }
+      },
+      "floor_effect": {
+        "train": {
+          "fraction_changed": 0.7266509753315389,
+          "central_32_fraction_changed": 0.49762424501050423,
+          "roi_center_changed": 0.13865546218487396,
+          "mean_absolute_change": 0.030938518450775443
+        },
+        "val": {
+          "fraction_changed": 0.5736683436802456,
+          "central_32_fraction_changed": 0.22950962611607142,
+          "roi_center_changed": 0.125,
+          "mean_absolute_change": 0.022643244359642267
+        }
+      }
+    },
+    "removal": {
+      "development_rows": 294,
+      "paired_source_slices": 147,
+      "raw_orientation_closer_pairs": 147,
+      "border_disagreements": 6,
+      "centroid_disagreements": 6,
+      "preserve_disagreements": 0,
+      "changed_vs_border_rows": 232,
+      "probes": {
+        "border": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "orientation": {
+            "validation_auc": 0.5535714285714285,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.6607142857142857
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.7142857142857143
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "texture": {
+            "validation_auc": 0.6473214285714286,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.9151785714285714
+            ],
+            "within_source_auc_range": [
+              0.5,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6608,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "background": {
+            "validation_auc": 0.832908163265306,
+            "source_bootstrap_95_interval": [
+              0.4700255102040817,
+              1.0
+            ],
+            "within_source_auc_range": [
+              0.2857142857142857,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.8119999999999999,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.8252551020408163,
+            "source_bootstrap_95_interval": [
+              0.4642857142857143,
+              1.0
+            ],
+            "within_source_auc_range": [
+              0.28571428571428575,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.8048,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          }
+        },
+        "preserve": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "orientation": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "texture": {
+            "validation_auc": 0.5580357142857143,
+            "source_bootstrap_95_interval": [
+              0.2857142857142857,
+              0.8392857142857143
+            ],
+            "within_source_auc_range": [
+              0.21428571428571427,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5824,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "background": {
+            "validation_auc": 0.9292091836734694,
+            "source_bootstrap_95_interval": [
+              0.8832908163265307,
+              1.0
+            ],
+            "within_source_auc_range": [
+              0.8571428571428572,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.9152,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.9419642857142858,
+            "source_bootstrap_95_interval": [
+              0.8125,
+              1.0
+            ],
+            "within_source_auc_range": [
+              0.7142857142857143,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.9296,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          }
+        },
+        "preserve_floor": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "orientation": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "brightness": {
+            "validation_auc": 0.6919642857142857,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.9419642857142857
+            ],
+            "within_source_auc_range": [
+              0.5,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.712,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "texture": {
+            "validation_auc": 0.6485969387755102,
+            "source_bootstrap_95_interval": [
+              0.44642857142857145,
+              0.8979591836734693
+            ],
+            "within_source_auc_range": [
+              0.42857142857142855,
+              0.9693877551020409
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6648000000000001,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "background": {
+            "validation_auc": 0.7321428571428571,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.96875
+            ],
+            "within_source_auc_range": [
+              0.5,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.7552000000000001,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.7321428571428571,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.9553571428571428
+            ],
+            "within_source_auc_range": [
+              0.5,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.7408,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          }
+        }
+      },
+      "floor_effect": {
+        "train": {
+          "fraction_changed": 0.7741350446428571,
+          "central_32_fraction_changed": 0.6617113642331933,
+          "roi_center_changed": 0.6134453781512605,
+          "mean_absolute_change": 0.035065322660473214
+        },
+        "val": {
+          "fraction_changed": 0.6467721121651786,
+          "central_32_fraction_changed": 0.49851771763392855,
+          "roi_center_changed": 0.5178571428571429,
+          "mean_absolute_change": 0.027181366508427476
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Raw-pair agreement is an audit measure only; the loader never reads counterparts or labels to choose orientation.",
+    "Only four validation source groups; no test-set or new-data confirmation.",
+    "Preserving native orientation removes preprocessing-induced flips, not all acquisition orientation variation.",
+    "Intensity thresholding is not a tissue/background segmentation; central-pixel changes flag possible information loss."
+  ],
+  "source_sha256": {
+    "src/audit_mri_mitigation.py": "15875ac5ba8acea766aaa91e1fdbb5445df64c66d1f8d919411b332326cdb022",
+    "src/mri_data_loader.py": "e3f4bf931545253a7578b7231e94f21154731d49f26c5b6a57cf10c492bf3567",
+    "src/audit_mri_shortcuts.py": "6dfe13db8ec6198be6d95f1b3114f8d30cf9b67777a329642a14179972094dff"
+  }
+}

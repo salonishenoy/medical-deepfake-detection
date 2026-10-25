@@ -1,4 +1,4 @@
-"""Regression checks for the dataset authors' CT window and ROI semantics."""
+"""Regression checks for the reference CT window and ROI semantics."""
 import numpy as np
 import pandas as pd
 import pytest
@@ -8,7 +8,7 @@ from src.config import DataConfig
 from src.data_loader import BTDDataset, window_and_scale
 
 
-def test_default_window_matches_authors():
+def test_default_ct_window():
     cfg = DataConfig()
     raw = np.array([-3024, -1000, -700, 650, 2000, 3071], dtype=np.float32)
     np.testing.assert_allclose(
@@ -38,7 +38,7 @@ def test_same_array_with_different_regions_produces_different_inputs(tmp_path):
 
 @pytest.mark.parametrize("x,y,left,top", [(0, 0, 0, 0), (255, 255, 160, 160),
                                           (10, 200, 0, 152), (200, 10, 152, 0)])
-def test_edge_patch_matches_author_boundary_shift(tmp_path, x, y, left, top):
+def test_edge_patch_boundary_shift(tmp_path, x, y, left, top):
     raw = np.random.default_rng(0).uniform(-700, 2000, (256, 256)).astype(np.float32)
     np.save(tmp_path / "slice.npy", raw)
     df = pd.DataFrame([dict(path="slice.npy", scan_id="s", scanner="m", cur_slice=1,

@@ -1,0 +1,416 @@
+{
+  "passed": true,
+  "contract_id": "team-a-preprocessing-v1",
+  "contract_sha256": "05c39ff2bf788e3e2c347159656ce32df8ebe74f4ecec7c4f60e2b8f7fe0bde8",
+  "scope": "Complete mechanical preprocessing audit; no model fitting, performance scores, or parameter selection",
+  "dataset_version": 7,
+  "rows_checked": 5791,
+  "image_inventory": {
+    "CT": {
+      "files": 4760,
+      "missing_files": 0,
+      "unreferenced_files": 0
+    },
+    "MRI": {
+      "files": 525,
+      "missing_files": 0,
+      "unreferenced_files": 0
+    }
+  },
+  "tasks": {
+    "CT": {
+      "injection": {
+        "rows": 3945,
+        "unique_files": 3635,
+        "source_groups": 256,
+        "exact_duplicate_csv_rows": 150,
+        "edge_shift_rows": 24,
+        "native_max_abs_reference_error": 5.960464477539063e-08,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "labels": {
+          "FM": 2748,
+          "TM": 1197
+        },
+        "held_out_rows": 771
+      },
+      "removal": {
+        "rows": 1146,
+        "unique_files": 1125,
+        "source_groups": 207,
+        "exact_duplicate_csv_rows": 0,
+        "edge_shift_rows": 18,
+        "native_max_abs_reference_error": 1.1920928955078125e-07,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "labels": {
+          "FB": 764,
+          "TB": 382
+        },
+        "held_out_rows": 219
+      }
+    },
+    "MRI": {
+      "injection": {
+        "rows": 350,
+        "unique_files": 350,
+        "source_groups": 25,
+        "exact_duplicate_csv_rows": 0,
+        "edge_shift_rows": 0,
+        "native_max_abs_reference_error": 0.0,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "labels": {
+          "FM": 175,
+          "TM": 175
+        },
+        "held_out_rows": 56
+      },
+      "removal": {
+        "rows": 350,
+        "unique_files": 350,
+        "source_groups": 25,
+        "exact_duplicate_csv_rows": 0,
+        "edge_shift_rows": 0,
+        "native_max_abs_reference_error": 0.0,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "labels": {
+          "FB": 175,
+          "TB": 175
+        },
+        "held_out_rows": 56
+      }
+    }
+  },
+  "hash_checks": {
+    "CT/injection": {
+      "raw_hash": {
+        "duplicate_groups": 275,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      },
+      "native_hash": {
+        "duplicate_groups": 150,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      },
+      "cnn_hash": {
+        "duplicate_groups": 150,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      }
+    },
+    "CT/removal": {
+      "raw_hash": {
+        "duplicate_groups": 382,
+        "conflicting_label_groups": 375,
+        "cross_split_groups": 0
+      },
+      "native_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      },
+      "cnn_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      }
+    },
+    "MRI/injection": {
+      "raw_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      },
+      "native_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      },
+      "cnn_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      }
+    },
+    "MRI/removal": {
+      "raw_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      },
+      "native_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      },
+      "cnn_hash": {
+        "duplicate_groups": 0,
+        "conflicting_label_groups": 0,
+        "cross_split_groups": 0
+      }
+    }
+  },
+  "public_loader_interfaces": [
+    {
+      "modality": "CT",
+      "task": "injection",
+      "train_method": "CTGAN",
+      "splits": {
+        "train": {
+          "rows": 1731,
+          "authentic": 903,
+          "fake": 828,
+          "source_groups": 180,
+          "mode": "training augmentation",
+          "delivered_sample_multiset_matches": true
+        },
+        "val": {
+          "rows": 384,
+          "authentic": 153,
+          "fake": 231,
+          "source_groups": 38,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_same": {
+          "rows": 456,
+          "authentic": 141,
+          "fake": 315,
+          "source_groups": 38,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_other": {
+          "rows": 456,
+          "authentic": 141,
+          "fake": 315,
+          "source_groups": 38,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        }
+      }
+    },
+    {
+      "modality": "CT",
+      "task": "injection",
+      "train_method": "SD",
+      "splits": {
+        "train": {
+          "rows": 1731,
+          "authentic": 903,
+          "fake": 828,
+          "source_groups": 180,
+          "mode": "training augmentation",
+          "delivered_sample_multiset_matches": true
+        },
+        "val": {
+          "rows": 384,
+          "authentic": 153,
+          "fake": 231,
+          "source_groups": 38,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_same": {
+          "rows": 456,
+          "authentic": 141,
+          "fake": 315,
+          "source_groups": 38,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_other": {
+          "rows": 456,
+          "authentic": 141,
+          "fake": 315,
+          "source_groups": 38,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        }
+      }
+    },
+    {
+      "modality": "CT",
+      "task": "removal",
+      "train_method": "CTGAN",
+      "splits": {
+        "train": {
+          "rows": 510,
+          "authentic": 255,
+          "fake": 255,
+          "source_groups": 143,
+          "mode": "training augmentation",
+          "delivered_sample_multiset_matches": true
+        },
+        "val": {
+          "rows": 108,
+          "authentic": 54,
+          "fake": 54,
+          "source_groups": 32,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_same": {
+          "rows": 146,
+          "authentic": 73,
+          "fake": 73,
+          "source_groups": 32,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_other": {
+          "rows": 146,
+          "authentic": 73,
+          "fake": 73,
+          "source_groups": 32,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        }
+      }
+    },
+    {
+      "modality": "CT",
+      "task": "removal",
+      "train_method": "SD",
+      "splits": {
+        "train": {
+          "rows": 510,
+          "authentic": 255,
+          "fake": 255,
+          "source_groups": 143,
+          "mode": "training augmentation",
+          "delivered_sample_multiset_matches": true
+        },
+        "val": {
+          "rows": 108,
+          "authentic": 54,
+          "fake": 54,
+          "source_groups": 32,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_same": {
+          "rows": 146,
+          "authentic": 73,
+          "fake": 73,
+          "source_groups": 32,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test_other": {
+          "rows": 146,
+          "authentic": 73,
+          "fake": 73,
+          "source_groups": 32,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        }
+      }
+    },
+    {
+      "modality": "MRI",
+      "task": "injection",
+      "train_method": null,
+      "splits": {
+        "train": {
+          "rows": 238,
+          "authentic": 119,
+          "fake": 119,
+          "source_groups": 17,
+          "mode": "training augmentation",
+          "delivered_sample_multiset_matches": true
+        },
+        "val": {
+          "rows": 56,
+          "authentic": 28,
+          "fake": 28,
+          "source_groups": 4,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test": {
+          "rows": 56,
+          "authentic": 28,
+          "fake": 28,
+          "source_groups": 4,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        }
+      }
+    },
+    {
+      "modality": "MRI",
+      "task": "removal",
+      "train_method": null,
+      "splits": {
+        "train": {
+          "rows": 238,
+          "authentic": 119,
+          "fake": 119,
+          "source_groups": 17,
+          "mode": "training augmentation",
+          "delivered_sample_multiset_matches": true
+        },
+        "val": {
+          "rows": 56,
+          "authentic": 28,
+          "fake": 28,
+          "source_groups": 4,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        },
+        "test": {
+          "rows": 56,
+          "authentic": 28,
+          "fake": 28,
+          "source_groups": 4,
+          "mode": "deterministic evaluation",
+          "delivered_sample_multiset_matches": true
+        }
+      }
+    }
+  ],
+  "public_loader_rows": 8574,
+  "held_out_rows_checked": 1102,
+  "mri_cross_task_group_and_exact_image_isolation": true,
+  "ct_cross_task_scan_overlap_injection_vs_removal": {
+    "train/train": 105,
+    "train/val": 23,
+    "train/test": 22,
+    "val/train": 18,
+    "val/val": 6,
+    "val/test": 6,
+    "test/train": 20,
+    "test/val": 3,
+    "test/test": 3
+  },
+  "frozen_sources_and_manifests_unchanged": true,
+  "source_sha256": {
+    "src/config.py": "b0601212e4c9a2166505382682ed4a34e1ca2b1823e46b2e76df75ca9d8d29ea",
+    "src/data_loader.py": "7e4ef5188142e50b6d861045ff36e58cd12460369414005a118a07c25f278084",
+    "src/mri_data_loader.py": "057bbb75d2987a45985bd64422ef134059a6c360807a78d15c3a8d4e80f51890",
+    "src/splits.py": "b31d3fb36b2ecc90edd8fa4a3e56b2fb653450a70a4848768dac6bf3a02a1059"
+  },
+  "manifest_sha256": {
+    "CT/injection/CT_injection.csv": "650eb837eb87996138ce2f7f88e81de5542d490bc453713e98a3fc61d9381ee9",
+    "CT/removal/CT_removal.csv": "13d53049187934b4b94ebf741f4f7a832c3a2c4adfdc2296bfe2181383f29fde",
+    "MRI/MRI_injection.csv": "d66adcc335db8a70d63793a0ca44ab00947e50598647159b6d2d63cf465f5c33",
+    "MRI/MRI_removal.csv": "1d79c6b0a4721b16430e97f42bf9ab9effd02decef7b58e9af0775b291d7222b"
+  },
+  "audit_script_sha256": "eee1092d4481c319e26f31e4c0baa2d2b7f38786a66513e325da28c90a419868",
+  "python": "3.12.13",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "torch": "2.14.1",
+    "torchvision": "0.29.1",
+    "pillow": "13.0.0"
+  },
+  "qualifications": [
+    "CT task-specific splits cannot be pooled without a new joint allocation.",
+    "Exact hashes do not rule out near-duplicates or verify patient identity.",
+    "ROI coordinates are supplied annotations, not independently verified clinical truth.",
+    "Preserve native MRI orientation does not establish canonical anatomy.",
+    "Training metadata precedes random augmentation and is flagged invalid for that tensor.",
+    "Teammate reproduction/review and publication remain pending."
+  ]
+}

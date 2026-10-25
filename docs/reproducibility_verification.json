@@ -1,0 +1,194 @@
+{
+  "passed": true,
+  "scope": "Same-host clean-venv reproduction of frozen Team A preprocessing",
+  "environment": {
+    "passed": true,
+    "python": "3.12.13",
+    "implementation": "CPython",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "system": "Darwin",
+    "machine": "arm64",
+    "isolated_environment": true,
+    "locked_packages": 34,
+    "expected_packages": {
+      "cloudpickle": "3.1.2",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "filelock": "4.2.4",
+      "fonttools": "4.67.0",
+      "fsspec": "2026.9.0",
+      "iniconfig": "2.3.1",
+      "jinja2": "3.1.6",
+      "joblib": "1.6.0",
+      "kiwisolver": "1.5.1",
+      "markupsafe": "3.0.4",
+      "matplotlib": "3.11.2",
+      "mpmath": "1.3.0",
+      "narwhals": "2.27.1",
+      "networkx": "3.7",
+      "numpy": "2.5.4",
+      "packaging": "26.3",
+      "pandas": "3.1.0",
+      "pillow": "13.0.0",
+      "pluggy": "1.7.0",
+      "pygments": "2.21.0",
+      "pyparsing": "3.3.3",
+      "pytest": "9.1.1",
+      "python-dateutil": "3.0.0",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "setuptools": "84.2.1",
+      "six": "1.17.0",
+      "sympy": "1.14.0",
+      "threadpoolctl": "3.7.0",
+      "torch": "2.14.1",
+      "torchvision": "0.29.1",
+      "typing-extensions": "4.16.0",
+      "tzdata": "2026.5"
+    },
+    "matched_package_count": 34,
+    "extra_packages": {},
+    "issues": [],
+    "lock_sha256": "362cfaeffbd9ca40bacd3f59aa4821669cc84fcea3a02c60c12268756226b7f9",
+    "contract_id": "team-a-preprocessing-v1",
+    "contract_sha256": "05c39ff2bf788e3e2c347159656ce32df8ebe74f4ecec7c4f60e2b8f7fe0bde8",
+    "frozen_preprocessing_source_sha256": {
+      "src/config.py": "b0601212e4c9a2166505382682ed4a34e1ca2b1823e46b2e76df75ca9d8d29ea",
+      "src/data_loader.py": "7e4ef5188142e50b6d861045ff36e58cd12460369414005a118a07c25f278084",
+      "src/mri_data_loader.py": "057bbb75d2987a45985bd64422ef134059a6c360807a78d15c3a8d4e80f51890",
+      "src/splits.py": "b31d3fb36b2ecc90edd8fa4a3e56b2fb653450a70a4848768dac6bf3a02a1059"
+    },
+    "scope": "Same-platform package/version reproduction check; no cross-platform or full-training guarantee"
+  },
+  "installation": {
+    "tool": "uv 0.11.19",
+    "fresh_virtual_environment": true,
+    "system_site_packages": false,
+    "packages_installed": 34,
+    "offline_cached_artifacts": true,
+    "link_mode": "copy",
+    "copied_from_previous_site_packages": false,
+    "dependency_compatibility_check": "uv pip check: all 34 packages compatible"
+  },
+  "regression_tests": {
+    "passed": 57,
+    "failed": 0,
+    "command": "python -m pytest tests -q --tb=short",
+    "environment": "fresh isolated lock installation"
+  },
+  "full_audit": {
+    "passed": true,
+    "rows_checked": 5791,
+    "held_out_rows_checked": 1102,
+    "image_files": 5285,
+    "public_loader_rows": 8574,
+    "original_and_clean_summary_equal": true,
+    "all_sample_records_equal": true,
+    "sample_records": 5791,
+    "sample_record_fields": [
+      "modality",
+      "task",
+      "path",
+      "scan_id",
+      "split",
+      "label",
+      "source_x",
+      "source_y",
+      "crop_left",
+      "crop_top",
+      "x",
+      "y",
+      "raw_hash",
+      "native_hash",
+      "cnn_hash"
+    ],
+    "sample_records_sha256": "4ac2220ceafbbc650d1fb481a7b13838caae16efe0d56dc1520e6a21b2bb170a",
+    "original_summary_sha256": "8b76c9352887d50e6f2d57e99ababe91f47320a3a8501f7982825a26334a496d",
+    "clean_summary_sha256": "8b76c9352887d50e6f2d57e99ababe91f47320a3a8501f7982825a26334a496d"
+  },
+  "seeded_loader_replay": {
+    "seed": 42,
+    "threads": 1,
+    "interfaces": [
+      {
+        "modality": "CT",
+        "task": "injection",
+        "method": "CTGAN",
+        "rows": 32,
+        "image_sha256": "30dc0be9e8a66979d8ab9a98df0d41ab71e6359e63323df6f4eccc7f83fbe4d9",
+        "labels_sha256": "582022acbe5965636f6cb708d66d2d83054bc92765bb1ef4fb9de624b07d0a0c",
+        "metadata_sha256": "85c61e679d8efd3d83f4a45842e5b8d6e541086bbda780d85a0cedb3590c9628"
+      },
+      {
+        "modality": "CT",
+        "task": "injection",
+        "method": "SD",
+        "rows": 32,
+        "image_sha256": "786a6724bb7d459f566e31d9b7c826b51eb06522712e01cbae83dc9598fd3636",
+        "labels_sha256": "0972b3129559a26b38dc824c2d8e7e1e896e239e607dafb31e5de7d6ccb9d8ad",
+        "metadata_sha256": "b7c030cdf061f14c4dd01b2c41fc8c383577e47cbf394549305a66e2abaa6a39"
+      },
+      {
+        "modality": "CT",
+        "task": "removal",
+        "method": "CTGAN",
+        "rows": 32,
+        "image_sha256": "655d11eae6f9829ebfbb87b802bc3339ce0ea7c48d69d435ef7033e28cd9e008",
+        "labels_sha256": "5a28b8e7a14415cf761e5da23022d3ca2be27dfd2951bf6589522f809681998d",
+        "metadata_sha256": "43a328c5b5ea579d454211460f1781d3282311fa48a15bb98d52c1b1a2c0a2dd"
+      },
+      {
+        "modality": "CT",
+        "task": "removal",
+        "method": "SD",
+        "rows": 32,
+        "image_sha256": "c47c40341751214f375f7802397d257497c6ce31b909c58e278ee6affa00b3dd",
+        "labels_sha256": "2b743c6e635cf5f5541878694d533455f2b9492625253381e03c0c85267f0d2d",
+        "metadata_sha256": "84cf1488d886a3e9cfe9d6bfea26a990da286acf7213642347da36ea31ac291a"
+      },
+      {
+        "modality": "MRI",
+        "task": "injection",
+        "method": null,
+        "rows": 32,
+        "image_sha256": "676fa521adf76095d3d36149f8b92eae9c90ae31b2815e7774c7df3cf5a99327",
+        "labels_sha256": "d89448ce6832a15b4e7ddf599e571d52784ce4415e116f05dcb6797ac3caa3e4",
+        "metadata_sha256": "1578afbdc421fe73a59273e32682bd2c8f8513faddca83af2b164f223a9b7264"
+      },
+      {
+        "modality": "MRI",
+        "task": "removal",
+        "method": null,
+        "rows": 32,
+        "image_sha256": "c2abfa017aa8e062ed4ab43bf90427ac7190b9abfe9aa2ef7b1e16d39b939c1a",
+        "labels_sha256": "d89448ce6832a15b4e7ddf599e571d52784ce4415e116f05dcb6797ac3caa3e4",
+        "metadata_sha256": "f3db804f6d2c946805cae954423b0e21516830ae8145e2b5a56f4575385df962"
+      }
+    ],
+    "all_six_interfaces_equal": true
+  },
+  "negative_control": {
+    "incorrect_numpy_pin_rejected": true,
+    "expected_exit_code": 1
+  },
+  "artifacts_sha256": {
+    ".python-version": "aa0d6581054e6e4ff3f91839deca7a854ad37221b8784d060b42d0f847ff1a3b",
+    "requirements.txt": "4a2b4733bc1de7629a69479578ae62e60ebba57e71d937409b761288563c46af",
+    "requirements-macos-arm64-py312.lock": "362cfaeffbd9ca40bacd3f59aa4821669cc84fcea3a02c60c12268756226b7f9",
+    "src/check_environment.py": "c31fc05fe20d081e9fa66dda35e6848940c615559f0435cd4b40e4ce599a41d7"
+  },
+  "contract_id": "team-a-preprocessing-v1",
+  "contract_sha256": "05c39ff2bf788e3e2c347159656ce32df8ebe74f4ecec7c4f60e2b8f7fe0bde8",
+  "preprocessing_sources_unchanged": true,
+  "limitations": [
+    "Verified only CPython 3.12.13 on macOS arm64 CPU on the same host/base Python build.",
+    "Other OS, CPU architectures, workers, and GPU configurations require separate verification.",
+    "Version pins do not lock wheel artifact hashes.",
+    "This verifies preprocessing replay, not complete model-training reproducibility."
+  ],
+  "publication_cleanup": {
+    "frozen_runtime_logic_unchanged": true,
+    "source_references_retained": true,
+    "optional_planning_notes_removed": true
+  }
+}

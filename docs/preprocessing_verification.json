@@ -1,0 +1,158 @@
+{
+  "scope": "Preprocessing contract verification; no AUC criterion or preprocessing changes",
+  "test_images_read": 0,
+  "development_rows": 4689,
+  "per_modality": {
+    "CT": {
+      "injection": {
+        "development_rows": 3174,
+        "source_groups": 218,
+        "native_max_abs_error": 5.960464477539063e-08,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "label_crop_coordinate_checks": "pass",
+        "split_rebuild_equal": true,
+        "evaluation_repeat_equal": true,
+        "augmentation_repeat_equal_with_caller_torch_seed": true
+      },
+      "removal": {
+        "development_rows": 927,
+        "source_groups": 175,
+        "native_max_abs_error": 1.1920928955078125e-07,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "label_crop_coordinate_checks": "pass",
+        "split_rebuild_equal": true,
+        "evaluation_repeat_equal": true,
+        "augmentation_repeat_equal_with_caller_torch_seed": true
+      }
+    },
+    "MRI": {
+      "injection": {
+        "development_rows": 294,
+        "source_groups": 21,
+        "native_max_abs_error": 0.0,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "label_crop_coordinate_checks": "pass",
+        "split_rebuild_equal": true,
+        "evaluation_repeat_equal": true,
+        "augmentation_repeat_equal_with_caller_torch_seed": true
+      },
+      "removal": {
+        "development_rows": 294,
+        "source_groups": 21,
+        "native_max_abs_error": 0.0,
+        "normalization_inverse_max_abs_error": 5.960464477539063e-08,
+        "label_crop_coordinate_checks": "pass",
+        "split_rebuild_equal": true,
+        "evaluation_repeat_equal": true,
+        "augmentation_repeat_equal_with_caller_torch_seed": true
+      }
+    }
+  },
+  "hash_checks": {
+    "CT/injection": {
+      "raw_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      },
+      "patch_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      },
+      "cnn_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      }
+    },
+    "CT/removal": {
+      "raw_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 303
+      },
+      "patch_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      },
+      "cnn_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      }
+    },
+    "MRI/injection": {
+      "raw_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      },
+      "patch_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      },
+      "cnn_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      }
+    },
+    "MRI/removal": {
+      "raw_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      },
+      "patch_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      },
+      "cnn_hash": {
+        "cross_split_groups": 0,
+        "conflicting_label_groups": 0
+      }
+    }
+  },
+  "metadata_only_change": true,
+  "pixel_label_split_rows_identical_to_before": true,
+  "resized_coordinate_conventions": {
+    "96": {
+      "scale": 2.3333333333333335,
+      "reported_convention": "x_out = (x_native + 0.5) * scale - 0.5",
+      "interpolation_pixel_center_convention": "x_out = (x_native + 0.5) * scale - 0.5",
+      "pixel_center_offset_from_reported": 0.0,
+      "previous_metadata_offset": 0.6666666666666667,
+      "status": "Corrected: metadata matches interpolation pixel-center geometry"
+    },
+    "128": {
+      "scale": 1.75,
+      "reported_convention": "x_out = (x_native + 0.5) * scale - 0.5",
+      "interpolation_pixel_center_convention": "x_out = (x_native + 0.5) * scale - 0.5",
+      "pixel_center_offset_from_reported": 0.0,
+      "previous_metadata_offset": 0.375,
+      "status": "Corrected: metadata matches interpolation pixel-center geometry"
+    }
+  },
+  "preservation": "MRI native crops preserve source values exactly /255. CT clipping is deliberate and reference-aligned. Resizing/augmentation intentionally alter pixels.",
+  "reproducibility": {
+    "split_seed_controls": "Source-group allocation only",
+    "evaluation": "Deterministic for same files/config/runtime",
+    "training": "Caller must seed torch for augmentation and DataLoader shuffle; cfg.seed alone does not do this",
+    "cross_runtime_bitwise_guarantee": false
+  },
+  "unresolved": [
+    "Preserve orientation is a conservative policy, not anatomical orientation ground truth.",
+    "No independent clinical verification of lesion locations, tissue extent, or augmentation plausibility.",
+    "Source folder IDs are not independently verified patient identities.",
+    "CT injection/removal must remain separate because source allocations differ across tasks."
+  ],
+  "python": "3.12.13",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "torch": "2.14.1",
+    "torchvision": "0.29.1",
+    "pillow": "13.0.0"
+  },
+  "source_sha256": {
+    "src/config.py": "91c97f633ddc14f1469aaf41936625cb55d7a9209d1ab89db461c53943c0b113",
+    "src/data_loader.py": "334321f79de5f42ac6936980efe4f8370d3c1c7eb7a364bb3dd7defdd94f63e3",
+    "src/mri_data_loader.py": "057bbb75d2987a45985bd64422ef134059a6c360807a78d15c3a8d4e80f51890",
+    "src/splits.py": "83914cc578d76267b7e472824ebe5f18d26e41b078e4ced5914440d9af46453d",
+    "requirements.txt": "0be4985adf1fa05f2c70253baab2f2c3eb2759392964b6db6131774f7cb8253d"
+  },
+  "script_sha256": "ffbb108f0aecd037a69efc87f568a61ea8e25cb0a0e713be25afb498d54ce8a2"
+}

@@ -19,7 +19,7 @@ from typing import Optional, Tuple
 ENV_VAR = "BTD_DATA_ROOT"
 
 
-def get_data_root(root: Optional[str | Path] = None) -> Path:
+def get_data_root(root: Optional[str | Path] = None, modality: str = "CT") -> Path:
     """Return the dataset root folder, or raise a clear error if it is not set/valid."""
     value = root or os.environ.get(ENV_VAR)
     if not value:
@@ -28,15 +28,17 @@ def get_data_root(root: Optional[str | Path] = None) -> Path:
             "or pass root=... (the folder that contains 'CT' and 'MRI')."
         )
     path = Path(value)
-    if not (path / "CT").is_dir():
-        raise FileNotFoundError(f"No 'CT' folder inside {path}. Check the dataset path.")
+    if modality not in ("CT", "MRI"):
+        raise ValueError("modality must be 'CT' or 'MRI'")
+    if not (path / modality).is_dir():
+        raise FileNotFoundError(f"No '{modality}' folder inside {path}. Check the dataset path.")
     return path
 
 
 @dataclass
 class DataConfig:
     # --- CT intensity window (Hounsfield units). Everything is clipped to this
-    # range and then scaled to [0, 1], matching the BTD authors' CT preprocessing.
+    # range and then scaled to [0, 1], matching the BTD reference CT preprocessing.
     hu_min: float = -700.0
     hu_max: float = 2000.0
     patch_size: int = 96          # native-resolution ROI, before CNN resizing

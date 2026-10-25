@@ -24,9 +24,9 @@ from .splits import TASKS, assign_scan_splits, build_splits, check_no_leakage, l
 
 
 def reference_patch(raw, x, y):
-    """Independent reference: BTD_evaluation.ipynb, commit 0fa74da, dataset class.
+    """Comparison adapted from BTD_evaluation.ipynb, commit 0fa74da, dataset class.
 
-    The authors normalize BEFORE casting to float32 and shift edge ROIs inward.
+    The comparison normalizes BEFORE casting to float32 and shifts edge ROIs inward.
     This helper deliberately does not call the pipeline's window/crop functions.
     """
     image = ((np.clip(raw, -700, 2000) + 700) / 2700).astype(np.float32)
@@ -121,8 +121,8 @@ def audit_task(task, root, out):
             assert full.shape == (3, 224, 224) and torch.isfinite(full).all()
             restored = full * cnn.std + cnn.mean
             assert restored.min() >= -1e-6 and restored.max() <= 1.000001
-            assert abs(cnn_meta["x"] * 96 / 224 + meta["crop_left"] - int(row.x)) < 1e-6
-            assert abs(cnn_meta["y"] * 96 / 224 + meta["crop_top"] - int(row.y)) < 1e-6
+            assert abs((cnn_meta["x"] + 0.5) * 96 / 224 - 0.5 + meta["crop_left"] - int(row.x)) < 1e-6
+            assert abs((cnn_meta["y"] + 0.5) * 96 / 224 - 0.5 + meta["crop_top"] - int(row.y)) < 1e-6
             if row.path not in file_info:
                 file_info[row.path] = {"dtype": str(raw.dtype), "shape": list(raw.shape),
                                        "raw_hash": digest(raw.astype(np.float32))}

@@ -1,7 +1,7 @@
 # Handoff: Medical Deepfake Detection (Team A, data engineering)
 
 > **Update (2026-10-24):** The historical notes below describe the original whole-slice
-> implementation. The user has since selected the authors' CT preprocessing: [-700, 2000]
+> implementation. The user has since selected the reference implementation's CT preprocessing: [-700, 2000]
 > scaling and coordinate-centered 96x96 patches for BOTH classes, preserving CSV rows.
 > See README.md for the current CNN adapter and coordinate contract. The earlier claim
 > that removal is a clean whole-slice benchmark is withdrawn: 13 sampled TB/FB_CTGAN
@@ -59,7 +59,7 @@ of a guess unless it is marked **ASSUMPTION** or **UNVERIFIED**.
   `PROJECT_TRACKER.md` in the same PR when a task changes status, never commit data / `.npy` /
   weights / checkpoints / credentials.
 - The Claude Code session that wrote the code **could push to `feature/data-loader`** (it cannot
-  and should not push to `main`). Commits carry the attribution trailers the harness asks for.
+  and should not push to `main`).
 
 ---
 
@@ -143,7 +143,7 @@ the bar the model must beat. Pretrained-vs-scratch and success/failure analysis 
 ### 3.1 What it is (Kaggle description)
 "BTD MRI and CT Deepfake Test Sets": CT and MRI images in which cancerous tumours were **added or
 removed** by generative models. Companion paper: *Back-in-Time Diffusion: Unsupervised Detection of
-Medical Deepfakes* (arXiv 2407.15169). Demo/eval script from the authors:
+Medical Deepfakes* (arXiv 2407.15169). Reference evaluation script:
 `github.com/FreddieMG/BTD--Unsupervised-Detection-of-Medical-Deepfakes`.
 
 - Tamper methods: **CTGAN** (GAN, CT only) and **Stable Diffusion** (CT and MRI).

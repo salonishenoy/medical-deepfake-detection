@@ -1,0 +1,132 @@
+{
+  "passed": true,
+  "scope": "MRI engineering; no shortcut/model-quality claim",
+  "dataset_version": 7,
+  "config": {
+    "patch_size": 128,
+    "image_size": 224,
+    "imagenet_norm": true,
+    "seed": 42,
+    "val_frac": 0.15,
+    "test_frac": 0.15,
+    "flip_prob": 0.5,
+    "rotation_deg": 10.0
+  },
+  "unique_files": 525,
+  "rows": 700,
+  "source_groups": 25,
+  "reference_commit": "0fa74daef6802d305dcca4e5e37b4393fdf89c5b",
+  "notebook_sha256": "a0c06362bb7b6e525b7061bf431145e33cbc8cf3d2cda06469831ca4ccda2892",
+  "reference_change": "y = 512-y -> y = image.shape[0] - 1 - y",
+  "corrected_reference_exact_matches": 700,
+  "original_reference_exact_matches": 175,
+  "different_from_original": 525,
+  "flipped_rows": 525,
+  "hash_checks": {
+    "raw_hash": {
+      "cross_split_groups": 0,
+      "injection_conflicting_label_groups": 0,
+      "removal_conflicting_label_groups": 0
+    },
+    "native_hash": {
+      "cross_split_groups": 0,
+      "injection_conflicting_label_groups": 0,
+      "removal_conflicting_label_groups": 0
+    },
+    "cnn_hash": {
+      "cross_split_groups": 0,
+      "injection_conflicting_label_groups": 0,
+      "removal_conflicting_label_groups": 0
+    }
+  },
+  "tasks": {
+    "injection": {
+      "rows": 350,
+      "batch_rows": {
+        "eval": 350,
+        "train": 350
+      },
+      "splits": {
+        "train": {
+          "scans": 17,
+          "authentic": 119,
+          "fake": 119
+        },
+        "val": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        },
+        "test": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        }
+      },
+      "paired_flip_disagreements": 1,
+      "patch_statistics_by_label": {
+        "0": {
+          "mean": 0.06946949660778046,
+          "zero_fraction": 0.06072998046875
+        },
+        "1": {
+          "mean": 0.06788928806781769,
+          "zero_fraction": 0.09820556640625
+        }
+      }
+    },
+    "removal": {
+      "rows": 350,
+      "batch_rows": {
+        "eval": 350,
+        "train": 350
+      },
+      "splits": {
+        "train": {
+          "scans": 17,
+          "authentic": 119,
+          "fake": 119
+        },
+        "val": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        },
+        "test": {
+          "scans": 4,
+          "authentic": 28,
+          "fake": 28
+        }
+      },
+      "paired_flip_disagreements": 6,
+      "patch_statistics_by_label": {
+        "0": {
+          "mean": 0.0681966245174408,
+          "zero_fraction": 0.05426025390625
+        },
+        "1": {
+          "mean": 0.0731610506772995,
+          "zero_fraction": 0.001220703125
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "src/audit_mri.py": "49be7a1aceb23f3bf79261e75642f377338d7819c04ed3973f6347afef803b2a",
+    "src/mri_data_loader.py": "7a75a5fb983e11e88b36bf618d24874b60318ce12bf8679feb365bf10cfe712d",
+    "src/config.py": "91c97f633ddc14f1469aaf41936625cb55d7a9209d1ab89db461c53943c0b113",
+    "src/data_loader.py": "4c935e06bbb5c71a30017b4918cdd58cbd54490f8afacc1a52500ccd6a03514d",
+    "src/splits.py": "83914cc578d76267b7e472824ebe5f18d26e41b078e4ced5914440d9af46453d"
+  },
+  "manifest_sha256": {
+    "MRI_injection.csv": "d66adcc335db8a70d63793a0ca44ab00947e50598647159b6d2d63cf465f5c33",
+    "MRI_removal.csv": "1d79c6b0a4721b16430e97f42bf9ab9effd02decef7b58e9af0775b291d7222b"
+  },
+  "caveats": [
+    "Image-dependent orientation heuristic still disagrees for seven paired source slices.",
+    "Only 25 source groups; patient identity not independently verified.",
+    "MRI is SD-only; train/val/test share source assignments across tasks.",
+    "Random training augmentation invalidates returned ROI coordinates.",
+    "MRI shortcut assessment remains a separate increment."
+  ]
+}

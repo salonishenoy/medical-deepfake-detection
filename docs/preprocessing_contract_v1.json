@@ -1,0 +1,312 @@
+{
+  "contract_id": "team-a-preprocessing-v1",
+  "status": "frozen baseline for final mechanical audit; local/unpublished",
+  "scope": "Team A input preprocessing and data interfaces",
+  "dataset": {
+    "ref": "freddiegraboski/btd-mri-and-ct-deepfake-test-sets",
+    "version": 7,
+    "manifest_sha256": {
+      "CT/injection/CT_injection.csv": "650eb837eb87996138ce2f7f88e81de5542d490bc453713e98a3fc61d9381ee9",
+      "CT/removal/CT_removal.csv": "13d53049187934b4b94ebf741f4f7a832c3a2c4adfdc2296bfe2181383f29fde",
+      "MRI/MRI_injection.csv": "d66adcc335db8a70d63793a0ca44ab00947e50598647159b6d2d63cf465f5c33",
+      "MRI/MRI_removal.csv": "1d79c6b0a4721b16430e97f42bf9ab9effd02decef7b58e9af0775b291d7222b"
+    }
+  },
+  "defaults": {
+    "CT": {
+      "hu_min": -700.0,
+      "hu_max": 2000.0,
+      "patch_size": 96,
+      "image_size": 224,
+      "imagenet_norm": true,
+      "seed": 42,
+      "val_frac": 0.15,
+      "test_frac": 0.15,
+      "slice_range": null,
+      "flip_prob": 0.5,
+      "rotation_deg": 10.0
+    },
+    "MRI": {
+      "orientation_policy": "preserve",
+      "patch_size": 128,
+      "image_size": 224,
+      "imagenet_norm": true,
+      "seed": 42,
+      "val_frac": 0.15,
+      "test_frac": 0.15,
+      "flip_prob": 0.5,
+      "rotation_deg": 10.0
+    }
+  },
+  "inputs": {
+    "CT": {
+      "format": "npy",
+      "observed_shape": [
+        512,
+        512
+      ],
+      "loader": "squeeze to 2D, then float32",
+      "scaling": "(clip(float32_array, -700, 2000) + 700) / 2700",
+      "preserve_csv_rows": true
+    },
+    "MRI": {
+      "format": "PNG",
+      "mode": "L",
+      "dtype": "uint8",
+      "observed_shape": [
+        512,
+        512
+      ],
+      "scaling": "float32_array / 255",
+      "preserve_csv_rows": true,
+      "requires_both_task_manifests": true
+    }
+  },
+  "roi": {
+    "x_axis": "column",
+    "y_axis": "row",
+    "input_convention": "zero-indexed pixel centers",
+    "crop": "native square centered on CSV point; shift inward at boundaries; no padding",
+    "sample_unit": "one CSV row / ROI, including authentic rows and duplicate rows"
+  },
+  "labels": {
+    "0": [
+      "TM",
+      "TB"
+    ],
+    "1": [
+      "FM",
+      "FB"
+    ]
+  },
+  "cnn_adapter": {
+    "output_shape": [
+      "B",
+      3,
+      224,
+      224
+    ],
+    "image_dtype": "float32",
+    "label_dtype": "int64",
+    "resize": {
+      "mode": "bilinear",
+      "align_corners": false,
+      "antialias": true
+    },
+    "channels": "repeat grayscale 3 times",
+    "imagenet_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "imagenet_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "operation_order": [
+      "load",
+      "scale",
+      "MRI optional orientation",
+      "native ROI crop",
+      "resize",
+      "repeat channels",
+      "training augmentation",
+      "optional ImageNet normalization"
+    ],
+    "normalization_formula": "(channel - mean) / std",
+    "final_tensor_range": "not constrained to [0,1] when ImageNet normalization is enabled"
+  },
+  "augmentation": {
+    "training_only": true,
+    "order": [
+      "horizontal flip",
+      "vertical flip",
+      "rotation"
+    ],
+    "horizontal_flip_probability": 0.5,
+    "vertical_flip_probability": 0.5,
+    "rotation_degrees": [
+      -10,
+      10
+    ],
+    "rotation_interpolation": "nearest",
+    "rotation_fill": 0,
+    "rotation_expand": false,
+    "metadata": "returned ROI coordinates precede random augmentation; coordinates_valid=False whenever train=True"
+  },
+  "metadata": {
+    "item_field_types": {
+      "CT": {
+        "path": "str",
+        "scan_id": "str",
+        "scanner": "str",
+        "cur_slice": "int",
+        "x": "float",
+        "y": "float",
+        "source_x": "int",
+        "source_y": "int",
+        "crop_left": "int",
+        "crop_top": "int",
+        "coordinate_convention": "str",
+        "coordinates_valid": "bool"
+      },
+      "MRI": {
+        "path": "str",
+        "scan_id": "str",
+        "scanner": "str",
+        "cur_slice": "int",
+        "x": "float",
+        "y": "float",
+        "source_x": "int",
+        "source_y": "int",
+        "crop_left": "int",
+        "crop_top": "int",
+        "coordinate_convention": "str",
+        "coordinates_valid": "bool",
+        "task": "str",
+        "source_height": "int",
+        "source_width": "int",
+        "oriented_x": "int",
+        "oriented_y": "int",
+        "orientation_policy": "str",
+        "orientation_flipped": "bool"
+      }
+    },
+    "coordinate_convention": "pixel_center",
+    "forward": "(oriented_coordinate - crop_origin + 0.5) * image_size / patch_size - 0.5",
+    "inverse": "(output_coordinate + 0.5) * patch_size / image_size - 0.5 + crop_origin",
+    "CT_oriented_coordinate": "source coordinate (no deterministic orientation transform)",
+    "MRI_reference_reflection": "oriented_y = source_height - 1 - source_y",
+    "validity": "train=False only; default_collate batches numeric/bool fields into tensors and string fields into sequences",
+    "extent": "continuous coordinates within [-0.5, image_size - 0.5]; no clamping",
+    "meaning": "ROI point, not a segmentation mask"
+  },
+  "splits": {
+    "seed": 42,
+    "allocation": "approximately 70/15/15 by source folder, stratified by scanner; rounded within scanner groups",
+    "CT": {
+      "keys": [
+        "train",
+        "val",
+        "test_same",
+        "test_other"
+      ],
+      "train_methods": [
+        "CTGAN",
+        "SD"
+      ],
+      "group_allocation": "once per task, shared across fake methods",
+      "train_val": "selected fake method plus authentic rows",
+      "tests": "same held-out source allocation, separate fake methods; authentic test rows shared",
+      "cross_task_pooling": "unsupported with current independent CT task splits"
+    },
+    "MRI": {
+      "keys": [
+        "train",
+        "val",
+        "test"
+      ],
+      "fake_method": "SD only",
+      "group_allocation": "once from union of injection and removal manifests, shared across tasks"
+    },
+    "patient_identity": "source folder grouping only; patient mapping not independently verified"
+  },
+  "loader_defaults": {
+    "batch_size": 32,
+    "num_workers": 0,
+    "train_shuffle": true,
+    "eval_shuffle": false,
+    "drop_last": false
+  },
+  "reproducibility": {
+    "config_seed_controls": "split membership only",
+    "evaluation": "deterministic for same files/config/runtime",
+    "training_rng": "caller must seed torch and data loading; full training reproducibility is outside this contract",
+    "environment": "dependency versions recorded in preprocessing_verification.json; lockfile pending"
+  },
+  "provenance": {
+    "reference_repo": "FreddieMG/BTD--Unsupervised-Detection-of-Medical-Deepfakes",
+    "reference_commit": "0fa74daef6802d305dcca4e5e37b4393fdf89c5b",
+    "reference_notebook": "BTD_evaluation.ipynb",
+    "source_sha256": {
+      "src/config.py": "b0601212e4c9a2166505382682ed4a34e1ca2b1823e46b2e76df75ca9d8d29ea",
+      "src/data_loader.py": "7e4ef5188142e50b6d861045ff36e58cd12460369414005a118a07c25f278084",
+      "src/mri_data_loader.py": "057bbb75d2987a45985bd64422ef134059a6c360807a78d15c3a8d4e80f51890",
+      "src/splits.py": "b31d3fb36b2ecc90edd8fa4a3e56b2fb653450a70a4848768dac6bf3a02a1059"
+    },
+    "upstream_methods": [
+      "CT window and CT/MRI native patch sizes",
+      "CSV-coordinate sampling",
+      "optional MRI border heuristic"
+    ],
+    "project_departures": [
+      "MRI preserve native orientation by default",
+      "standard reflection in explicit MRI reference option",
+      "CNN adapter",
+      "pixel-center output metadata",
+      "source-group split interfaces"
+    ]
+  },
+  "acceptance": {
+    "criteria": [
+      "correct file/label/scaling",
+      "native ROI correspondence",
+      "resized pixel-center correspondence",
+      "documented augmentation limits",
+      "source-group separation",
+      "repeatable evaluation",
+      "explicit upstream/project provenance"
+    ],
+    "auc_threshold": null,
+    "mitigation_experiments": "paused",
+    "background_suppression": "disabled; background AUC is an observation, not a correctness gate",
+    "current_evidence": "4,689 development rows verified; 54 tests passed before contract freeze",
+    "remaining": "teammate reproduction/review and publication"
+  },
+  "verification": {
+    "public_loader_interfaces": [
+      {
+        "modality": "CT",
+        "task": "injection",
+        "method": "CTGAN",
+        "checked": "API keys, default config, tensor/label types, metadata schema, augmentation settings"
+      },
+      {
+        "modality": "CT",
+        "task": "injection",
+        "method": "SD",
+        "checked": "API keys, default config, tensor/label types, metadata schema, augmentation settings"
+      },
+      {
+        "modality": "CT",
+        "task": "removal",
+        "method": "CTGAN",
+        "checked": "API keys, default config, tensor/label types, metadata schema, augmentation settings"
+      },
+      {
+        "modality": "CT",
+        "task": "removal",
+        "method": "SD",
+        "checked": "API keys, default config, tensor/label types, metadata schema, augmentation settings"
+      },
+      {
+        "modality": "MRI",
+        "task": "injection",
+        "method": null,
+        "checked": "API keys, default config, tensor/label types, metadata schema, augmentation settings"
+      },
+      {
+        "modality": "MRI",
+        "task": "removal",
+        "method": null,
+        "checked": "API keys, default config, tensor/label types, metadata schema, augmentation settings"
+      }
+    ],
+    "runtime_sources_unchanged_during_freeze": true,
+    "default_configs_match_runtime": true,
+    "default_loader_arguments_match_runtime": true,
+    "local_document_links_checked": 28,
+    "current_frozen_baseline_complete_data_audit": "pending"
+  }
+}

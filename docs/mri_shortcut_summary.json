@@ -1,0 +1,563 @@
+{
+  "scope": "Team A MRI data-quality audit; no neural detector development",
+  "seed": 42,
+  "probe": "DecisionTreeClassifier(max_depth=3, random_state=0); fixed features; no tuning",
+  "evaluated_split": "val only",
+  "test_probe_rows": 0,
+  "uncertainty": "1000 source-folder bootstrap resamples of fixed validation predictions, seed 42. Only four validation groups: descriptive, not a reliable population confidence guarantee.",
+  "interpretation": "AUC above chance can indicate dataset cues; it does not prove which cues a CNN uses or that texture information is spurious.",
+  "orientation": {
+    "task_pair_disagreements": 7,
+    "unique_source_slices": 6,
+    "source_groups": 3,
+    "all_real_flip_fake_do_not": true,
+    "raw_pairs_closer_before_opposite_flips": 7,
+    "real_border_mean_difference_range": [
+      0.10852865874767303,
+      0.38684898614883423
+    ],
+    "fake_border_mean_difference_range": [
+      -0.21601544320583344,
+      -0.0019530951976776123
+    ]
+  },
+  "tasks": {
+    "injection": {
+      "train_rows": 238,
+      "val_rows": 56,
+      "train_source_groups": 17,
+      "val_source_groups": 4,
+      "paired_flip_disagreements": 1,
+      "disagreement_sources": 1,
+      "disagreements_by_split": {
+        "val": 1
+      },
+      "border_sign_real_positive_fake_negative": true,
+      "probes": {
+        "native": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "orientation": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "texture": {
+            "validation_auc": 0.6396683673469388,
+            "source_bootstrap_95_interval": [
+              0.44642857142857145,
+              0.8609693877551021
+            ],
+            "within_source_auc_range": [
+              0.42857142857142855,
+              0.9591836734693878
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6426611796982167,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "background": {
+            "validation_auc": 0.49107142857142855,
+            "source_bootstrap_95_interval": [
+              0.25,
+              0.5892857142857144
+            ],
+            "within_source_auc_range": [
+              0.14285714285714285,
+              0.5714285714285714
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5061728395061728,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.5714285714285714,
+            "source_bootstrap_95_interval": [
+              0.3214285714285714,
+              0.8214285714285714
+            ],
+            "within_source_auc_range": [
+              0.2857142857142857,
+              0.9285714285714286
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5761316872427983,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          }
+        },
+        "cnn": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "orientation": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "texture": {
+            "validation_auc": 0.6371173469387754,
+            "source_bootstrap_95_interval": [
+              0.37755102040816324,
+              0.9241071428571429
+            ],
+            "within_source_auc_range": [
+              0.37755102040816324,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6406035665294925,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "background": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.45982142857142855,
+              0.5535714285714286
+            ],
+            "within_source_auc_range": [
+              0.42857142857142855,
+              0.5714285714285714
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.48628257887517146,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.45982142857142855,
+              0.5535714285714286
+            ],
+            "within_source_auc_range": [
+              0.42857142857142855,
+              0.5714285714285714
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.48628257887517146,
+            "validation_rows_excluding_flagged_pairs": 54
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 54
+          }
+        }
+      },
+      "median_features": {
+        "native": [
+          {
+            "split": "train",
+            "label": 0,
+            "mean": 0.06640051305294037,
+            "zero_fraction": 0.06072998046875,
+            "near_zero_fraction": 0.11248779296875
+          },
+          {
+            "split": "train",
+            "label": 1,
+            "mean": 0.06319388747215271,
+            "zero_fraction": 0.07769775390625,
+            "near_zero_fraction": 0.17510986328125
+          },
+          {
+            "split": "val",
+            "label": 0,
+            "mean": 0.10167907923460007,
+            "zero_fraction": 0.034393310546875,
+            "near_zero_fraction": 0.094696044921875
+          },
+          {
+            "split": "val",
+            "label": 1,
+            "mean": 0.10611537471413612,
+            "zero_fraction": 0.134368896484375,
+            "near_zero_fraction": 0.2115478515625
+          }
+        ],
+        "cnn": [
+          {
+            "split": "train",
+            "label": 0,
+            "mean": 0.06639858335256577,
+            "zero_fraction": 0.01349250637755102,
+            "near_zero_fraction": 0.07106983418367346
+          },
+          {
+            "split": "train",
+            "label": 1,
+            "mean": 0.06320314854383469,
+            "zero_fraction": 0.04217155612244898,
+            "near_zero_fraction": 0.10833864795918367
+          },
+          {
+            "split": "val",
+            "label": 0,
+            "mean": 0.10166745260357857,
+            "zero_fraction": 0.008938536352040815,
+            "near_zero_fraction": 0.04994419642857143
+          },
+          {
+            "split": "val",
+            "label": 1,
+            "mean": 0.10612770542502403,
+            "zero_fraction": 0.07949019451530612,
+            "near_zero_fraction": 0.1683075573979592
+          }
+        ]
+      }
+    },
+    "removal": {
+      "train_rows": 238,
+      "val_rows": 56,
+      "train_source_groups": 17,
+      "val_source_groups": 4,
+      "paired_flip_disagreements": 6,
+      "disagreement_sources": 3,
+      "disagreements_by_split": {
+        "train": 3,
+        "val": 3
+      },
+      "border_sign_real_positive_fake_negative": true,
+      "probes": {
+        "native": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "orientation": {
+            "validation_auc": 0.5535714285714285,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.6607142857142857
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.7142857142857143
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "texture": {
+            "validation_auc": 0.59375,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.875
+            ],
+            "within_source_auc_range": [
+              0.5,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6008,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "background": {
+            "validation_auc": 0.8966836734693877,
+            "source_bootstrap_95_interval": [
+              0.6785714285714286,
+              1.0
+            ],
+            "within_source_auc_range": [
+              0.5714285714285714,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.8976000000000001,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.9617346938775511,
+            "source_bootstrap_95_interval": [
+              0.958545918367347,
+              0.989795918367347
+            ],
+            "within_source_auc_range": [
+              0.9795918367346939,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.9583999999999999,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          }
+        },
+        "cnn": {
+          "slice": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "orientation": {
+            "validation_auc": 0.5535714285714285,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.6607142857142857
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.7142857142857143
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "brightness": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "texture": {
+            "validation_auc": 0.6473214285714286,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.9151785714285714
+            ],
+            "within_source_auc_range": [
+              0.5,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.6608,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "background": {
+            "validation_auc": 0.832908163265306,
+            "source_bootstrap_95_interval": [
+              0.4700255102040817,
+              1.0
+            ],
+            "within_source_auc_range": [
+              0.2857142857142857,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.8119999999999999,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "all_image_statistics": {
+            "validation_auc": 0.8252551020408163,
+            "source_bootstrap_95_interval": [
+              0.4642857142857143,
+              1.0
+            ],
+            "within_source_auc_range": [
+              0.28571428571428575,
+              1.0
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.8048,
+            "validation_rows_excluding_flagged_pairs": 50
+          },
+          "scanner": {
+            "validation_auc": 0.5,
+            "source_bootstrap_95_interval": [
+              0.5,
+              0.5
+            ],
+            "within_source_auc_range": [
+              0.5,
+              0.5
+            ],
+            "validation_auc_excluding_flagged_pairs": 0.5,
+            "validation_rows_excluding_flagged_pairs": 50
+          }
+        }
+      },
+      "median_features": {
+        "native": [
+          {
+            "split": "train",
+            "label": 0,
+            "mean": 0.06535549461841583,
+            "zero_fraction": 0.04815673828125,
+            "near_zero_fraction": 0.090576171875
+          },
+          {
+            "split": "train",
+            "label": 1,
+            "mean": 0.07029503583908081,
+            "zero_fraction": 0.00189208984375,
+            "near_zero_fraction": 0.01519775390625
+          },
+          {
+            "split": "val",
+            "label": 0,
+            "mean": 0.09022361412644386,
+            "zero_fraction": 0.0692138671875,
+            "near_zero_fraction": 0.118896484375
+          },
+          {
+            "split": "val",
+            "label": 1,
+            "mean": 0.10309844464063644,
+            "zero_fraction": 0.0006103515625,
+            "near_zero_fraction": 0.008453369140625
+          }
+        ],
+        "cnn": [
+          {
+            "split": "train",
+            "label": 0,
+            "mean": 0.06537152081727982,
+            "zero_fraction": 0.008191167091836735,
+            "near_zero_fraction": 0.061224489795918366
+          },
+          {
+            "split": "train",
+            "label": 1,
+            "mean": 0.07029906660318375,
+            "zero_fraction": 0.0,
+            "near_zero_fraction": 0.0013352997448979591
+          },
+          {
+            "split": "val",
+            "label": 0,
+            "mean": 0.09021516516804695,
+            "zero_fraction": 0.03665098852040816,
+            "near_zero_fraction": 0.08836894132653061
+          },
+          {
+            "split": "val",
+            "label": 1,
+            "mean": 0.10310869291424751,
+            "zero_fraction": 0.0,
+            "near_zero_fraction": 0.00026905293367346936
+          }
+        ]
+      }
+    }
+  },
+  "source_sha256": {
+    "src/audit_mri_shortcuts.py": "4fefe75b2c98be4c9ef17ba29616d8ca1252e5485028554fbae1a78e80a967be",
+    "src/mri_data_loader.py": "7a75a5fb983e11e88b36bf618d24874b60318ce12bf8679feb365bf10cfe712d",
+    "src/config.py": "91c97f633ddc14f1469aaf41936625cb55d7a9209d1ab89db461c53943c0b113",
+    "src/splits.py": "83914cc578d76267b7e472824ebe5f18d26e41b078e4ced5914440d9af46453d"
+  },
+  "manifest_sha256": {
+    "MRI_injection.csv": "d66adcc335db8a70d63793a0ca44ab00947e50598647159b6d2d63cf465f5c33",
+    "MRI_removal.csv": "1d79c6b0a4721b16430e97f42bf9ab9effd02decef7b58e9af0775b291d7222b"
+  },
+  "loader_changed": false,
+  "rows_removed": false
+}

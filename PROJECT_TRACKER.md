@@ -18,24 +18,44 @@
 
 ## Master To-Do List
 
+Team A environment reproduction is documented in the
+[setup/replay guide](docs/REPRODUCIBILITY.md). Python 3.12.13 and all 34 packages
+are pinned for macOS arm64, with a dedicated environment checker. See its evidence
+report for the completed clean-environment validation results.
+
+Team A's [preprocessing contract v1](docs/PREPROCESSING_CONTRACT.md) is frozen for
+the final mechanical audit. The [JSON snapshot](docs/preprocessing_contract_v1.json)
+records defaults, schemas, and source/manifest hashes. Six public loader interfaces
+were checked against it; runtime preprocessing was unchanged during the freeze.
+The [complete-data mechanical audit](docs/FULL_PREPROCESSING_AUDIT.md) now passes
+all 5,791 regions / 5,285 files and 8,574 public-loader deliveries. All 57 tests pass.
+Review/publication remain pending.
+
+Current Team A review: further mitigation experiments are paused. The
+[preprocessing correctness review](docs/PREPROCESSING_VERIFICATION.md) checks
+4,689 CT/MRI development rows without an AUC criterion. Loading, scaling, native
+ROI geometry, source splitting, and evaluation determinism pass. Resized
+pixel-center metadata is now corrected and verified; 57 tests pass. Training
+seeding responsibilities and teammate reproduction remain to confirm. Clinical annotation/orientation truth is not verified.
+
 ### Phase 1: Initiation & Dataset Preparation (Weeks 1-3)
 
 **Goal:** Set up the repository and build the data ingestion pipeline.
 
-CT correction validated locally on `codex/author-ct-preprocessing`: use the authors' [-700, 2000]
+CT correction prepared for `feature/data-loader`: use the reference [-700, 2000]
 window and 96x96 CSV-centered patches for both classes, preserving every CSV row. The CNN
 adapter still produces 3x224x224 tensors. All 4,760 CT files / 5,091 ROI rows passed the
-full audit; 20 tests pass. Review and merge remain pending. See
+frozen-baseline audit; 57 tests pass across CT/MRI. Review and merge remain pending. See
 [CT_DATA_HANDOFF.md](docs/CT_DATA_HANDOFF.md) for results and remaining dataset biases.
 
 - [x] Finalize project scope and proposal.
 - [x] Initialize GitHub repository (`README.md`, `.gitignore`).
 - [x] **Team A:** Download the BTD dataset from Kaggle to local machines (do not push to GitHub).
-- [ ] **Team A:** Write `src/data_loader.py` to load `.npy` files. *(written on `feature/data-loader`; confirm with `python -m src.check_data` on the real data)*
-- [ ] **Team A:** Implement intensity normalization and 1-to-3 channel duplication. *(fixed CT window + scaling to [0, 1]; same check as above)*
-- [ ] **Team A:** Parse dataset CSVs to create distinct Training, Validation, and Test splits. Ensure splits are isolated by manipulation type (CTGAN vs. Diffusion). *(`src/splits.py`, split by scan ID; same check as above)*
+- [ ] **Team A:** Write `src/data_loader.py` to load `.npy` files. *(Implemented; complete frozen-baseline mechanical audit passes. Review/merge pending.)*
+- [ ] **Team A:** Implement intensity normalization and 1-to-3 channel duplication. *(Implemented and mechanically verified on every CT/MRI row. Review/merge pending.)*
+- [ ] **Team A:** Parse dataset CSVs to create distinct Training, Validation, and Test splits. Ensure splits are isolated by manipulation type (CTGAN vs. Diffusion). *(`src/splits.py`; all public split deliveries and source isolation verified. CT tasks must remain separate. Review/merge pending.)*
 - [ ] **Team A:** Run the shortcut checks (slice position, scanner, file type) and decide whether to turn on the slice filter.
-- [ ] **Team A (stretch):** Add MRI (`.png`) loading after the CT pipeline is confirmed.
+- [ ] **Team A (stretch):** Add MRI (`.png`) loading after the CT pipeline is confirmed. *(Implemented locally; all 700 rows and every MRI public split pass the frozen-default mechanical audit. Resized metadata uses pixel-center geometry; 57 tests pass. Background AUC is an observation, not an acceptance gate; mitigation is paused. See [MRI_DATA_HANDOFF.md](docs/MRI_DATA_HANDOFF.md). Review/merge pending.)*
 
 ### Phase 2: Baselines & Midterm Report (Weeks 4-6)
 
